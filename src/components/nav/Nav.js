@@ -56,7 +56,7 @@ const Nav = () => {
           </Link>
           <div>
             {pathname === "/" ? (
-              <Link to="/create" style={{ textDecoration: "none" }}>
+              <Link to="/create-spider" style={{ textDecoration: "none" }}>
                 <Button variant="contained" color="secondary">
                   + Add Spider
                 </Button>

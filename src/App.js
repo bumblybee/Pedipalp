@@ -4,7 +4,8 @@ import { ThemeProvider } from "@material-ui/styles";
 import { createMuiTheme } from "@material-ui/core/styles";
 import Nav from "./components/nav/Nav";
 import Home from "./pages/Home";
-import Create from "./pages/Create";
+import CreateSpider from "./pages/CreateSpider";
+import CreateEvent from "./pages/CreateEvent";
 import "./App.css";
 import { lime, cyan, red, lightBlue, green } from "@material-ui/core/colors";
 
@@ -50,8 +51,11 @@ function App() {
                 <Home />
               </ThemeProvider>
             </Route>
-            <Route path="/create">
-              <Create />
+            <Route path="/create-spider">
+              <CreateSpider />
+            </Route>
+            <Route path="/create-event">
+              <CreateEvent />
             </Route>
           </div>
         </ThemeProvider>

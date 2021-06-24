@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   },
   inline: {
     padding: "0 1rem 1rem",
-    borderBottom: "1px solid rgba(0,0,0,0.085)",
+    borderBottom: "1px solid #bdbdbd55",
   },
   tags: {
     display: "flex",

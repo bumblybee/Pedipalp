@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getSpiders } from "../api/spiderApi";
-import EventCard from "../components/cards/EventCard";
+import HomeCard from "../components/cards/HomeCard";
 import EventList from "../components/events/EventList";
 
 const Home = () => {
@@ -26,7 +26,7 @@ const Home = () => {
       }}
     >
       {spiders.map((spider) => (
-        <EventCard spider={spider} />
+        <HomeCard spider={spider} />
       ))}
     </div>
   ) : (

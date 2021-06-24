@@ -1,21 +1,17 @@
 import React from "react";
-
+import { lime, cyan, red, lightBlue, green } from "@material-ui/core/colors";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
-import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import Collapse from "@material-ui/core/Collapse";
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import { red, purple, orange } from "@material-ui/core/colors";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import ShareIcon from "@material-ui/icons/Share";
+import { orange } from "@material-ui/core/colors";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import AddIcon from "@material-ui/icons/Add";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
     }),
   },
   header: {
-    borderBottom: "1px solid #ccc",
+    borderBottom: "1px solid #bdbdbddd",
   },
   expandOpen: {
     transform: "rotate(180deg)",
@@ -46,9 +42,14 @@ const useStyles = makeStyles((theme) => ({
   content: {
     padding: 0,
   },
+  button: {
+    color: cyan[700],
+  },
 }));
 
-const CardComponent = ({ spider, header, body }) => {
+// TODO: Pass prop for expandable content = rest of list
+
+const CardComponent = ({ spider, headerButton, body }) => {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -67,12 +68,9 @@ const CardComponent = ({ spider, header, body }) => {
         }
         action={
           // Put details link here
-          <IconButton aria-label="settings">
-            <AddIcon />
-          </IconButton>
+          headerButton
         }
         title={spider.name}
-        // subheader="September 14, 2016"
       />
 
       <CardContent className={classes.content}>{body}</CardContent>

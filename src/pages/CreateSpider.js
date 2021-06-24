@@ -41,7 +41,7 @@ const useStyles = makeStyles({
   },
 });
 
-const Create = () => {
+const CreateSpider = () => {
   const classes = useStyles();
   const history = useHistory();
   const [loading, setLoading] = useState(false);
@@ -174,4 +174,4 @@ const Create = () => {
   );
 };
 
-export default Create;
+export default CreateSpider;
