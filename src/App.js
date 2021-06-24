@@ -66,6 +66,7 @@ function App() {
               <Route path="/create-event/:id">
                 <CreateEvent />
               </Route>
+              <Route path="/about/:id">{/* <About /> */}</Route>
               <Route path="/sign-in">
                 <SignIn />
               </Route>

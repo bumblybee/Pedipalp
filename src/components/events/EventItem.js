@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    color: "#212121",
+    color: "#757575",
   },
   days: {
     color: "#757575",
@@ -68,7 +68,7 @@ const EventItem = ({ event }) => {
         alignItems="flex-start"
         className={`${classes.date} ${classes.li}`}
       >
-        <Typography variant="subtitle2" color="textPrimary">
+        <Typography variant="subtitle2" className={classes.date}>
           {moment(event.date).format("MM/DD/YY")}
         </Typography>
         <Typography variant="caption" className={classes.days}>

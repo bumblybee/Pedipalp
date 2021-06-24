@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import Card from "@material-ui/core/Card";
@@ -10,7 +10,7 @@ import Collapse from "@material-ui/core/Collapse";
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 
-import { lime, cyan, purple } from "@material-ui/core/colors";
+import { lime, cyan } from "@material-ui/core/colors";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 const useStyles = makeStyles((theme) => ({
@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     borderBottom: `1px solid ${cyan[200]}`,
     color: "#fff",
     background: cyan[200],
-    textShadow: "0 1px 1px rgba(0,0,0,0.1)",
+    textShadow: "0 1px 1px rgba(0,0,0,0.2)",
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
@@ -43,8 +43,8 @@ const useStyles = makeStyles((theme) => ({
     transform: "rotate(180deg)",
   },
   avatar: {
-    backgroundColor: lime[400],
-    boxShadow: "0 1px 1px rgba(0,0,0,0.1)",
+    backgroundColor: lime["A700"],
+    boxShadow: "0 1px 1px rgba(0,0,0,0.2)",
   },
   content: {
     paddingBottom: 0,
@@ -74,9 +74,11 @@ const CardComponent = ({ spider, headerButton, body, expandableContent }) => {
         className={classes.header}
         titleTypographyProps={{ variant: "h6" }}
         avatar={
-          <Avatar aria-label="name" className={classes.avatar}>
-            {spider.name.charAt(0)}
-          </Avatar>
+          <Link style={{ textDecoration: "none" }} to={`/about/${spider.id}`}>
+            <Avatar aria-label="name" className={classes.avatar}>
+              {spider.name.charAt(0)}
+            </Avatar>
+          </Link>
         }
         action={
           // Put details link here
