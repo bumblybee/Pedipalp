@@ -15,7 +15,7 @@ import { red, purple, orange } from "@material-ui/core/colors";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
+import AddIcon from "@material-ui/icons/Add";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,15 +34,21 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.shortest,
     }),
   },
+  header: {
+    borderBottom: "1px solid #ccc",
+  },
   expandOpen: {
     transform: "rotate(180deg)",
   },
   avatar: {
     backgroundColor: orange[400],
   },
+  content: {
+    padding: 0,
+  },
 }));
 
-const CardComponent = ({ spider }) => {
+const CardComponent = ({ spider, header, body }) => {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -53,37 +59,30 @@ const CardComponent = ({ spider }) => {
   return (
     <Card className={classes.root} raised>
       <CardHeader
+        className={classes.header}
         avatar={
-          <Avatar aria-label="recipe" className={classes.avatar}>
+          <Avatar aria-label="name" className={classes.avatar}>
             {spider.name.charAt(0)}
           </Avatar>
         }
         action={
           // Put details link here
           <IconButton aria-label="settings">
-            <MoreVertIcon />
+            <AddIcon />
           </IconButton>
         }
         title={spider.name}
         // subheader="September 14, 2016"
       />
-      {/* <CardMedia
-        className={classes.media}
-        image="/static/images/cards/paella.jpg"
-        title="Paella dish"
-      /> */}
-      <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-          {spider.about}
-        </Typography>
-      </CardContent>
+
+      <CardContent className={classes.content}>{body}</CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
+        {/* <IconButton aria-label="add to favorites">
           <FavoriteIcon />
         </IconButton>
         <IconButton aria-label="share">
           <ShareIcon />
-        </IconButton>
+        </IconButton> */}
         <IconButton
           className={clsx(classes.expand, {
             [classes.expandOpen]: expanded,

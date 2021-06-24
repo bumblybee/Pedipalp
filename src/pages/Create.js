@@ -47,6 +47,7 @@ const Create = () => {
   const [loading, setLoading] = useState(false);
   const [spiderData, setSpiderData] = useState({
     name: "",
+    species: "",
     age: Number,
     about: "",
   });
@@ -58,8 +59,12 @@ const Create = () => {
     const res = await createSpider(spiderData);
 
     res && setLoading(false);
-    console.log(res);
-    res && !res.error && !res[0].error && history.push("/");
+
+    if ((res && res.error) || (res && res[0].error)) {
+      console.log(res);
+    } else {
+      history.push("/");
+    }
   };
 
   return (
@@ -74,7 +79,7 @@ const Create = () => {
     >
       <Card className={classes.root} raised>
         <CardContent>
-          <Typography variant="h5" component="h2" gutterBottom>
+          <Typography variant="h6" component="h2" gutterBottom>
             Add New Spider
           </Typography>
           <form
@@ -89,6 +94,15 @@ const Create = () => {
                 id="name"
                 onChange={(e) =>
                   setSpiderData({ ...spiderData, name: e.target.value })
+                }
+              />
+            </FormControl>
+            <FormControl className={classes.formItem}>
+              <InputLabel htmlFor="species">Species</InputLabel>
+              <Input
+                id="species"
+                onChange={(e) =>
+                  setSpiderData({ ...spiderData, species: e.target.value })
                 }
               />
             </FormControl>

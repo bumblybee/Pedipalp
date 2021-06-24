@@ -12,12 +12,12 @@ export const mutateSpider = async (data, id) => {
 
 export const getSpider = async (id) => {
   const spider = await get(`/${id}`);
-  return spider.data ? spider.data : spider;
+  return spider && spider.data ? spider.data : spider;
 };
 
 export const getSpiders = async () => {
   const spider = await get("/");
-  return spider.data ? spider.data : spider;
+  return spider && spider.data ? spider.data : spider;
 };
 
 export const deleteSpider = async (id) => {

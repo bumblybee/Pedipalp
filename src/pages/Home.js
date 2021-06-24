@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getSpiders } from "../api/spiderApi";
-import CardComponent from "../components/cards/CardComponent";
+import EventCard from "../components/cards/EventCard";
+import EventList from "../components/events/EventList";
 
 const Home = () => {
   const [spiders, setSpiders] = useState([]);
@@ -8,7 +9,7 @@ const Home = () => {
   const fetchSpiders = async () => {
     const res = await getSpiders();
     console.log(res);
-    setSpiders(res.data);
+    setSpiders(res && res.data);
   };
 
   useEffect(() => {
@@ -25,7 +26,7 @@ const Home = () => {
       }}
     >
       {spiders.map((spider) => (
-        <CardComponent spider={spider} />
+        <EventCard spider={spider} />
       ))}
     </div>
   ) : (
