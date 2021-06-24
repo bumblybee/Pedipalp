@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
+import { NotificationContext } from "../../context/notification/NotificationContext";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -43,6 +44,7 @@ const useStyles = makeStyles({
 const Signup = () => {
   const history = useHistory();
   const { signUserUp } = useContext(UserContext);
+  const { setNotificationMessage } = useContext(NotificationContext);
   const classes = useStyles();
   const [loading, setLoading] = useState(false);
   const [userData, setUserData] = useState({ username: "", password: "" });
@@ -50,10 +52,17 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    const res = await signUserUp(userData);
-    console.log(res);
-    setLoading(false);
-    if (res && !res.error) history.push("/");
+    if (userData.username && userData.password) {
+      const res = await signUserUp(userData);
+      console.log(res);
+      setLoading(false);
+      if (res && !res.error) history.push("/");
+      if (res && res.error) setNotificationMessage(res.error, "error", true);
+    } else {
+      setNotificationMessage("Please fill in all fields", "error", true);
+      setLoading(false);
+      return;
+    }
   };
 
   return (
@@ -84,6 +93,7 @@ const Signup = () => {
                 onChange={(e) =>
                   setUserData({ ...userData, username: e.target.value })
                 }
+                required
               />
             </FormControl>
             <FormControl className={classes.formItem}>
@@ -94,6 +104,7 @@ const Signup = () => {
                 onChange={(e) =>
                   setUserData({ ...userData, password: e.target.value })
                 }
+                required
               />
             </FormControl>
           </form>
@@ -124,7 +135,7 @@ const Signup = () => {
             {loading ? (
               <CircularProgress color="#fff" size={"1.55rem"} thickness={6} />
             ) : (
-              "Save"
+              "Submit"
             )}
           </Button>
         </CardActions>

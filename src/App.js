@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { ThemeProvider } from "@material-ui/styles";
 import { createMuiTheme } from "@material-ui/core/styles";
 import UserProvider from "./context/UserProvider";
+import NotificationProvider from "./context/notification/NotificationProvider";
+import Notification from "./components/notification/Notification";
 import SignIn from "./pages/signIn/SignIn";
 import Nav from "./components/nav/Nav";
 import Home from "./pages/Home";
@@ -56,26 +58,29 @@ function App() {
       <Switch>
         <ThemeProvider theme={mainTheme}>
           <UserProvider>
-            <div className="App">
-              <Nav />
-              <Route path="/" exact>
-                <ThemeProvider theme={tagTheme}>
-                  <Home />
-                </ThemeProvider>
-              </Route>
-              <Route path="/create-spider">
-                <CreateSpider />
-              </Route>
-              <Route path="/create-event/:id">
-                <CreateEvent />
-              </Route>
-              <Route path="/about/:id">
-                <About />
-              </Route>
-              <Route path="/sign-in">
-                <SignIn />
-              </Route>
-            </div>
+            <NotificationProvider>
+              <div className="App">
+                <Notification />
+                <Nav />
+                <Route path="/" exact>
+                  <ThemeProvider theme={tagTheme}>
+                    <Home />
+                  </ThemeProvider>
+                </Route>
+                <Route path="/create-spider">
+                  <CreateSpider />
+                </Route>
+                <Route path="/create-event/:id">
+                  <CreateEvent />
+                </Route>
+                <Route path="/about/:id">
+                  <About />
+                </Route>
+                <Route path="/sign-in">
+                  <SignIn />
+                </Route>
+              </div>
+            </NotificationProvider>
           </UserProvider>
         </ThemeProvider>
       </Switch>

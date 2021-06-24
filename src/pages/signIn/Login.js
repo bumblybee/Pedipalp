@@ -89,6 +89,7 @@ const Login = () => {
               <InputLabel htmlFor="password">Password</InputLabel>
               <Input
                 id="password"
+                type="password"
                 onChange={(e) =>
                   setUserData({ ...userData, password: e.target.value })
                 }
@@ -122,7 +123,7 @@ const Login = () => {
             {loading ? (
               <CircularProgress color="#fff" size={"1.55rem"} thickness={6} />
             ) : (
-              "Save"
+              "Submit"
             )}
           </Button>
         </CardActions>
