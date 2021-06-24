@@ -3,12 +3,19 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { ThemeProvider } from "@material-ui/styles";
 import { createMuiTheme } from "@material-ui/core/styles";
 import UserProvider from "./context/UserProvider";
+import SignIn from "./pages/signIn/SignIn";
 import Nav from "./components/nav/Nav";
 import Home from "./pages/Home";
 import CreateSpider from "./pages/CreateSpider";
 import CreateEvent from "./pages/CreateEvent";
 import "./App.css";
-import { lime, cyan, red, lightBlue, green } from "@material-ui/core/colors";
+import {
+  lime,
+  cyan,
+  lightBlue,
+  lightGreen,
+  pink,
+} from "@material-ui/core/colors";
 
 const mainTheme = createMuiTheme({
   palette: {
@@ -25,12 +32,12 @@ const mainTheme = createMuiTheme({
 const tagTheme = createMuiTheme({
   palette: {
     primary: {
-      main: red[400],
-      molt: green[500],
+      main: pink[300],
+      molt: lightGreen[400],
       contrastText: "#fff",
     },
     secondary: {
-      main: lightBlue[500],
+      main: lightBlue[300],
       light: lime[300],
       contrastText: "#fff",
     },
@@ -58,6 +65,9 @@ function App() {
               </Route>
               <Route path="/create-event/:id">
                 <CreateEvent />
+              </Route>
+              <Route path="/sign-in">
+                <SignIn />
               </Route>
             </div>
           </UserProvider>

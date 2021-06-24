@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
-import { createSpider } from "../api/spiderApi";
+import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -40,30 +39,12 @@ const useStyles = makeStyles({
   },
 });
 
-const CreateSpider = () => {
+const Login = () => {
   const classes = useStyles();
-  const history = useHistory();
   const [loading, setLoading] = useState(false);
-  const [spiderData, setSpiderData] = useState({
-    name: "",
-    species: "",
-    age: Number,
-    about: "",
-  });
+  const [userData, setUserData] = useState({ username: "", password: "" });
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-
-    const res = await createSpider(spiderData);
-    console.log(res);
-    if (res && !res.data) {
-      setLoading(false);
-    } else {
-      setLoading(false);
-      history.push("/");
-    }
-  };
+  const handleSubmit = () => {};
 
   return (
     <div
@@ -78,7 +59,7 @@ const CreateSpider = () => {
       <Card className={classes.root} raised>
         <CardContent>
           <Typography variant="h6" component="h2" gutterBottom>
-            Add New Spider
+            Log in
           </Typography>
           <form
             onSubmit={handleSubmit}
@@ -87,52 +68,12 @@ const CreateSpider = () => {
             autoComplete="off"
           >
             <FormControl className={classes.formItem}>
-              <InputLabel htmlFor="name">Name</InputLabel>
-              <Input
-                id="name"
-                onChange={(e) =>
-                  setSpiderData({ ...spiderData, name: e.target.value })
-                }
-              />
+              <InputLabel htmlFor="username">Username</InputLabel>
+              <Input id="username" />
             </FormControl>
             <FormControl className={classes.formItem}>
-              <InputLabel htmlFor="species">Species</InputLabel>
-              <Input
-                id="species"
-                onChange={(e) =>
-                  setSpiderData({ ...spiderData, species: e.target.value })
-                }
-              />
-            </FormControl>
-            <FormControl className={classes.formItem}>
-              <InputLabel htmlFor="standard-adornment-amount">Age</InputLabel>
-              <Input
-                type="number"
-                id="standard-adornment-amount"
-                endAdornment={
-                  <InputAdornment position="end">mo</InputAdornment>
-                }
-                onChange={(e) =>
-                  setSpiderData({ ...spiderData, age: e.target.value })
-                }
-              />
-            </FormControl>
-            <FormControl className={classes.formItem}>
-              <InputLabel htmlFor="photo" shrink>
-                Photo
-              </InputLabel>
-              <Input id="photo" type="file" disableUnderline />
-            </FormControl>
-            <FormControl className={classes.formItem}>
-              <TextField
-                label="About..."
-                multiline
-                rows={10}
-                variant="outlined"
-                onChange={(e) =>
-                  setSpiderData({ ...spiderData, about: e.target.value })
-                }
-              />
+              <InputLabel htmlFor="password">Password</InputLabel>
+              <Input id="password" />
             </FormControl>
           </form>
         </CardContent>
@@ -146,7 +87,6 @@ const CreateSpider = () => {
               type="button"
               className={classes.button}
               color=""
-              variant="contained"
               disableElevation
             >
               Cancel
@@ -172,4 +112,4 @@ const CreateSpider = () => {
   );
 };
 
-export default CreateSpider;
+export default Login;

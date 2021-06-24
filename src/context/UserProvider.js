@@ -8,10 +8,10 @@ const UserProvider = ({ children }) => {
 
   const getCurrentUser = async () => {
     const userData = await getUser();
-
-    if (userData && userData.data) {
-      setUser(userData.data.user);
-      return userData.data.user;
+    console.log(userData);
+    if (userData && userData.user) {
+      setUser(userData.user);
+      return userData.user;
     }
 
     if (userData && userData.error) {

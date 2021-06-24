@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   },
   tags: {
     display: "flex",
-    justifyContent: "space-between",
+    justifyContent: "flex-start",
     width: "24%",
   },
   molt: {
@@ -69,7 +69,7 @@ const EventItem = ({ event }) => {
         className={`${classes.date} ${classes.li}`}
       >
         <Typography variant="subtitle2" color="textPrimary">
-          {event.date}
+          {moment(event.date).format("MM/DD/YY")}
         </Typography>
         <Typography variant="caption" className={classes.days}>
           {renderDays()}

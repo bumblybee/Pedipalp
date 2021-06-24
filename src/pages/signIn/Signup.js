@@ -1,17 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { createSpider } from "../api/spiderApi";
+import { UserContext } from "../../context/UserContext";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Input from "@material-ui/core/Input";
-import InputAdornment from "@material-ui/core/InputAdornment";
+
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
+
 import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles({
@@ -40,29 +40,20 @@ const useStyles = makeStyles({
   },
 });
 
-const CreateSpider = () => {
-  const classes = useStyles();
+const Signup = () => {
   const history = useHistory();
+  const { signUserUp } = useContext(UserContext);
+  const classes = useStyles();
   const [loading, setLoading] = useState(false);
-  const [spiderData, setSpiderData] = useState({
-    name: "",
-    species: "",
-    age: Number,
-    about: "",
-  });
+  const [userData, setUserData] = useState({ username: "", password: "" });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
-    const res = await createSpider(spiderData);
+    const res = await signUserUp(userData);
     console.log(res);
-    if (res && !res.data) {
-      setLoading(false);
-    } else {
-      setLoading(false);
-      history.push("/");
-    }
+    setLoading(false);
+    if (res && !res.error) history.push("/");
   };
 
   return (
@@ -78,7 +69,7 @@ const CreateSpider = () => {
       <Card className={classes.root} raised>
         <CardContent>
           <Typography variant="h6" component="h2" gutterBottom>
-            Add New Spider
+            Sign up
           </Typography>
           <form
             onSubmit={handleSubmit}
@@ -87,50 +78,21 @@ const CreateSpider = () => {
             autoComplete="off"
           >
             <FormControl className={classes.formItem}>
-              <InputLabel htmlFor="name">Name</InputLabel>
+              <InputLabel htmlFor="username">Username</InputLabel>
               <Input
-                id="name"
+                id="username"
                 onChange={(e) =>
-                  setSpiderData({ ...spiderData, name: e.target.value })
+                  setUserData({ ...userData, username: e.target.value })
                 }
               />
             </FormControl>
             <FormControl className={classes.formItem}>
-              <InputLabel htmlFor="species">Species</InputLabel>
+              <InputLabel htmlFor="password">Password</InputLabel>
               <Input
-                id="species"
+                id="password"
+                type="password"
                 onChange={(e) =>
-                  setSpiderData({ ...spiderData, species: e.target.value })
-                }
-              />
-            </FormControl>
-            <FormControl className={classes.formItem}>
-              <InputLabel htmlFor="standard-adornment-amount">Age</InputLabel>
-              <Input
-                type="number"
-                id="standard-adornment-amount"
-                endAdornment={
-                  <InputAdornment position="end">mo</InputAdornment>
-                }
-                onChange={(e) =>
-                  setSpiderData({ ...spiderData, age: e.target.value })
-                }
-              />
-            </FormControl>
-            <FormControl className={classes.formItem}>
-              <InputLabel htmlFor="photo" shrink>
-                Photo
-              </InputLabel>
-              <Input id="photo" type="file" disableUnderline />
-            </FormControl>
-            <FormControl className={classes.formItem}>
-              <TextField
-                label="About..."
-                multiline
-                rows={10}
-                variant="outlined"
-                onChange={(e) =>
-                  setSpiderData({ ...spiderData, about: e.target.value })
+                  setUserData({ ...userData, password: e.target.value })
                 }
               />
             </FormControl>
@@ -146,7 +108,6 @@ const CreateSpider = () => {
               type="button"
               className={classes.button}
               color=""
-              variant="contained"
               disableElevation
             >
               Cancel
@@ -172,4 +133,4 @@ const CreateSpider = () => {
   );
 };
 
-export default CreateSpider;
+export default Signup;

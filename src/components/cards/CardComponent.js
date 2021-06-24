@@ -47,7 +47,10 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: "0 1px 1px rgba(0,0,0,0.1)",
   },
   content: {
-    // padding: "0.5rem",
+    paddingBottom: 0,
+  },
+  expandedContent: {
+    paddingTop: 0,
   },
 
   expandable: {
@@ -101,8 +104,9 @@ const CardComponent = ({ spider, headerButton, body, expandableContent }) => {
         unmountOnExit
         className={classes.expandable}
       >
-        {/* Here is where can put all previous records */}
-        <CardContent className={classes.content}>
+        <CardContent
+          className={`${classes.content} ${classes.expandedContent}`}
+        >
           {expandableContent}
         </CardContent>
       </Collapse>
