@@ -1,13 +1,11 @@
 import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import { createEvent } from "../api/eventApi";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import Input from "@material-ui/core/Input";
-import InputAdornment from "@material-ui/core/InputAdornment";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import Button from "@material-ui/core/Button";
@@ -44,6 +42,8 @@ const useStyles = makeStyles({
 const CreateEvent = () => {
   const classes = useStyles();
   const history = useHistory();
+  const { id } = useParams();
+
   const [loading, setLoading] = useState(false);
   const [eventData, setEventData] = useState({
     date: "",
@@ -61,11 +61,11 @@ const CreateEvent = () => {
     e.preventDefault();
     setLoading(true);
 
-    console.log(eventData);
-    const res = await createEvent(eventData);
+    // console.log(eventData);
+    const res = await createEvent({ ...eventData, spiderId: id });
     console.log(res);
 
-    if ((res && res.error) || (res && res[0].error)) {
+    if (res && !res.data) {
       setLoading(false);
     } else {
       setLoading(false);

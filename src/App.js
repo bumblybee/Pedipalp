@@ -56,7 +56,7 @@ function App() {
               <Route path="/create-spider">
                 <CreateSpider />
               </Route>
-              <Route path="/create-event">
+              <Route path="/create-event/:id">
                 <CreateEvent />
               </Route>
             </div>

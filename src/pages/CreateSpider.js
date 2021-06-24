@@ -58,9 +58,8 @@ const CreateSpider = () => {
 
     const res = await createSpider(spiderData);
     console.log(res);
-    if ((res && res.error) || (res && res[0].error)) {
+    if (res && !res.data) {
       setLoading(false);
-      console.log(res);
     } else {
       setLoading(false);
       history.push("/");
