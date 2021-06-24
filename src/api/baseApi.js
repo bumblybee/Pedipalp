@@ -2,7 +2,9 @@ import axios from "axios";
 import { handleErrors, handleErrorsArray } from "../handlers/errorHandler";
 
 const baseURL =
-  process.env.NODE_ENV === "development" && "http://localhost:7000";
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:7000"
+    : "https://pedipalps-server.herokuapp.com";
 
 const instance = axios.create({
   baseURL,
