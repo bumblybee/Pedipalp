@@ -1,4 +1,5 @@
 import React from "react";
+import moment from "moment";
 import { makeStyles } from "@material-ui/core/styles";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -6,6 +7,7 @@ import OpacityIcon from "@material-ui/icons/Opacity";
 import FastfoodIcon from "@material-ui/icons/Fastfood";
 import SyncIcon from "@material-ui/icons/Sync";
 import Typography from "@material-ui/core/Typography";
+import { lime, cyan } from "@material-ui/core/colors";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,17 +28,40 @@ const useStyles = makeStyles((theme) => ({
   },
   li: {
     width: "100%",
-    paddingTop: 0,
+    paddingTop: "0.25rem",
   },
   date: {
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
+    color: "#212121",
+  },
+  days: {
+    color: "#757575",
   },
 }));
 
 const EventItem = ({ event }) => {
   const classes = useStyles();
+
+  const countDays = () => {
+    const today = moment();
+    const date = event.date;
+
+    return today.diff(date, "days");
+  };
+
+  const renderDays = () => {
+    const days = countDays();
+    switch (days) {
+      case 0:
+        return "today";
+      case 1:
+        return "1 day ago";
+      default:
+        return `${days} days ago`;
+    }
+  };
 
   return (
     <>
@@ -47,8 +72,8 @@ const EventItem = ({ event }) => {
         <Typography variant="subtitle2" color="textPrimary">
           {event.date}
         </Typography>
-        <Typography variant="caption" color="textPrimary">
-          3 days ago
+        <Typography variant="caption" className={classes.days}>
+          {renderDays()}
         </Typography>
       </ListItem>
       <ListItem className={classes.li}>

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useHistory, useParams } from "react-router-dom";
+import moment from "moment";
 import { createEvent } from "../api/eventApi";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
@@ -99,6 +100,7 @@ const CreateEvent = () => {
                 id="date"
                 label="Date"
                 type="date"
+                max={moment().format("YYYY-MM-DD")}
                 defaultValue=""
                 InputLabelProps={{
                   shrink: true,

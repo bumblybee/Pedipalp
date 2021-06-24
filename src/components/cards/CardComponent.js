@@ -32,7 +32,8 @@ const useStyles = makeStyles((theme) => ({
   },
   header: {
     borderBottom: "1px solid #bdbdbddd",
-    color: "#212121",
+    color: "#fff",
+    background: cyan[200],
   },
   expandOpen: {
     transform: "rotate(180deg)",
