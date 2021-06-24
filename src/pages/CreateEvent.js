@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { createSpider } from "../api/spiderApi";
+import { createEvent } from "../api/eventApi";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -13,7 +13,7 @@ import FormControl from "@material-ui/core/FormControl";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
-import { HighlightSharp } from "@material-ui/icons";
+import CheckboxComponent from "../components/checkbox/CheckboxComponent";
 
 const useStyles = makeStyles({
   root: {
@@ -45,24 +45,30 @@ const CreateEvent = () => {
   const classes = useStyles();
   const history = useHistory();
   const [loading, setLoading] = useState(false);
-  const [spiderData, setSpiderData] = useState({
-    name: "",
-    species: "",
-    age: Number,
-    about: "",
+  const [eventData, setEventData] = useState({
+    date: "",
+    ate: false,
+    drank: false,
+    molted: false,
+    notes: "",
   });
+
+  const handleChecked = (e) => {
+    setEventData({ ...eventData, [e.target.name]: e.target.checked });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
-    const res = await createSpider(spiderData);
-
-    res && setLoading(false);
+    console.log(eventData);
+    const res = await createEvent(eventData);
+    console.log(res);
 
     if ((res && res.error) || (res && res[0].error)) {
-      console.log(res);
+      setLoading(false);
     } else {
+      setLoading(false);
       history.push("/");
     }
   };
@@ -80,7 +86,7 @@ const CreateEvent = () => {
       <Card className={classes.root} raised>
         <CardContent>
           <Typography variant="h6" component="h2" gutterBottom>
-            Add New Spider
+            Add New Event
           </Typography>
           <form
             onSubmit={handleSubmit}
@@ -89,50 +95,31 @@ const CreateEvent = () => {
             autoComplete="off"
           >
             <FormControl className={classes.formItem}>
-              <InputLabel htmlFor="name">Name</InputLabel>
-              <Input
-                id="name"
+              <TextField
+                id="date"
+                label="Date"
+                type="date"
+                defaultValue=""
+                InputLabelProps={{
+                  shrink: true,
+                }}
                 onChange={(e) =>
-                  setSpiderData({ ...spiderData, name: e.target.value })
+                  setEventData({ ...eventData, date: e.target.value })
                 }
               />
             </FormControl>
             <FormControl className={classes.formItem}>
-              <InputLabel htmlFor="species">Species</InputLabel>
-              <Input
-                id="species"
-                onChange={(e) =>
-                  setSpiderData({ ...spiderData, species: e.target.value })
-                }
-              />
+              <CheckboxComponent handleChecked={handleChecked} />
             </FormControl>
-            <FormControl className={classes.formItem}>
-              <InputLabel htmlFor="standard-adornment-amount">Age</InputLabel>
-              <Input
-                type="number"
-                id="standard-adornment-amount"
-                endAdornment={
-                  <InputAdornment position="end">mo</InputAdornment>
-                }
-                onChange={(e) =>
-                  setSpiderData({ ...spiderData, age: e.target.value })
-                }
-              />
-            </FormControl>
-            <FormControl className={classes.formItem}>
-              <InputLabel htmlFor="photo" shrink>
-                Photo
-              </InputLabel>
-              <Input id="photo" type="file" disableUnderline />
-            </FormControl>
+
             <FormControl className={classes.formItem}>
               <TextField
-                label="About..."
+                label="Notes..."
                 multiline
                 rows={10}
                 variant="outlined"
                 onChange={(e) =>
-                  setSpiderData({ ...spiderData, about: e.target.value })
+                  setEventData({ ...eventData, notes: e.target.value })
                 }
               />
             </FormControl>

@@ -57,12 +57,12 @@ const CreateSpider = () => {
     setLoading(true);
 
     const res = await createSpider(spiderData);
-
-    res && setLoading(false);
-
+    console.log(res);
     if ((res && res.error) || (res && res[0].error)) {
+      setLoading(false);
       console.log(res);
     } else {
+      setLoading(false);
       history.push("/");
     }
   };
