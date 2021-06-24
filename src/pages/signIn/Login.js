@@ -1,16 +1,16 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useContext } from "react";
+import { Link, useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
+import { UserContext } from "../../context/UserContext";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Input from "@material-ui/core/Input";
-import InputAdornment from "@material-ui/core/InputAdornment";
+
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles({
@@ -41,10 +41,19 @@ const useStyles = makeStyles({
 
 const Login = () => {
   const classes = useStyles();
+  const history = useHistory();
+  const { logUserIn } = useContext(UserContext);
   const [loading, setLoading] = useState(false);
   const [userData, setUserData] = useState({ username: "", password: "" });
 
-  const handleSubmit = () => {};
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    const res = await logUserIn(userData);
+    console.log(res);
+    setLoading(false);
+    if (res && !res.error) history.push("/");
+  };
 
   return (
     <div
@@ -69,11 +78,21 @@ const Login = () => {
           >
             <FormControl className={classes.formItem}>
               <InputLabel htmlFor="username">Username</InputLabel>
-              <Input id="username" />
+              <Input
+                id="username"
+                onChange={(e) =>
+                  setUserData({ ...userData, username: e.target.value })
+                }
+              />
             </FormControl>
             <FormControl className={classes.formItem}>
               <InputLabel htmlFor="password">Password</InputLabel>
-              <Input id="password" />
+              <Input
+                id="password"
+                onChange={(e) =>
+                  setUserData({ ...userData, password: e.target.value })
+                }
+              />
             </FormControl>
           </form>
         </CardContent>

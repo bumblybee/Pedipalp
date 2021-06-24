@@ -6,6 +6,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import OpacityIcon from "@material-ui/icons/Opacity";
 import FastfoodIcon from "@material-ui/icons/Fastfood";
 import SyncIcon from "@material-ui/icons/Sync";
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles((theme) => ({
@@ -37,6 +38,9 @@ const useStyles = makeStyles((theme) => ({
   },
   days: {
     color: "#757575",
+  },
+  delete: {
+    color: theme.palette.primary.trash,
   },
 }));
 

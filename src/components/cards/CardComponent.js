@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import Card from "@material-ui/core/Card";
@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 345,
     width: "90%",
+    margin: "0 auto",
     marginBottom: "1rem",
   },
   media: {
@@ -62,7 +63,9 @@ const useStyles = makeStyles((theme) => ({
 
 const CardComponent = ({ spider, headerButton, body, expandableContent }) => {
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
+
+  const [expanded, setExpanded] = useState(false);
+  const { pathname } = useLocation();
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -74,9 +77,16 @@ const CardComponent = ({ spider, headerButton, body, expandableContent }) => {
         className={classes.header}
         titleTypographyProps={{ variant: "h6" }}
         avatar={
-          <Link style={{ textDecoration: "none" }} to={`/about/${spider.id}`}>
+          <Link
+            style={{ textDecoration: "none" }}
+            to={
+              spider && spider.id && !pathname.includes("about")
+                ? `/about/${spider.id}`
+                : "/"
+            }
+          >
             <Avatar aria-label="name" className={classes.avatar}>
-              {spider.name.charAt(0)}
+              {spider && spider.name && spider.name.charAt(0)}
             </Avatar>
           </Link>
         }
@@ -84,34 +94,39 @@ const CardComponent = ({ spider, headerButton, body, expandableContent }) => {
           // Put details link here
           headerButton
         }
-        title={spider.name}
+        title={spider && spider.name && spider.name}
       />
 
       <CardContent className={classes.content}>{body}</CardContent>
-      <CardActions className={classes.expandable}>
-        <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </IconButton>
-      </CardActions>
-      <Collapse
-        in={expanded}
-        timeout="auto"
-        unmountOnExit
-        className={classes.expandable}
-      >
-        <CardContent
-          className={`${classes.content} ${classes.expandedContent}`}
-        >
-          {expandableContent}
-        </CardContent>
-      </Collapse>
+
+      {expandableContent && (
+        <>
+          <CardActions className={classes.expandable}>
+            <IconButton
+              className={clsx(classes.expand, {
+                [classes.expandOpen]: expanded,
+              })}
+              onClick={handleExpandClick}
+              aria-expanded={expanded}
+              aria-label="show more"
+            >
+              <ExpandMoreIcon />
+            </IconButton>
+          </CardActions>
+          <Collapse
+            in={expanded}
+            timeout="auto"
+            unmountOnExit
+            className={classes.expandable}
+          >
+            <CardContent
+              className={`${classes.content} ${classes.expandedContent}`}
+            >
+              {expandableContent}
+            </CardContent>
+          </Collapse>
+        </>
+      )}
     </Card>
   );
 };

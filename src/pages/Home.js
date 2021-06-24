@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { getSpiders } from "../api/spiderApi";
 import HomeCard from "../components/cards/HomeCard";
-import EventList from "../components/events/EventList";
+import Box from "@material-ui/core/Box";
+import Skeleton from "@material-ui/lab/Skeleton";
 
 const Home = () => {
   const [spiders, setSpiders] = useState([]);
@@ -23,6 +24,7 @@ const Home = () => {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
+        width: "100%",
       }}
     >
       {spiders.map((spider) => (
@@ -30,7 +32,20 @@ const Home = () => {
       ))}
     </div>
   ) : (
-    <h4>No spiders to show</h4>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Skeleton variant="rect" width={310} height={240} animation="false" />
+      <br />
+      <Skeleton variant="rect" width={310} height={240} animation="false" />
+      <br />
+      <Skeleton variant="rect" width={310} height={240} animation="false" />
+    </div>
   );
 };
 

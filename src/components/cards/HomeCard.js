@@ -30,7 +30,7 @@ const HomeCard = ({ spider }) => {
   }, []);
 
   const headerButton = (
-    <Link to={`/create-event/${spider.id}`}>
+    <Link style={{ textDecoration: "none" }} to={`/create-event/${spider.id}`}>
       <IconButton aria-label="add">
         <AddIcon className={classes.button} />
       </IconButton>
@@ -41,8 +41,10 @@ const HomeCard = ({ spider }) => {
     <CardComponent
       spider={spider}
       headerButton={headerButton}
-      body={<EventList spider={spider} events={events.slice(0, 2)} />}
-      expandableContent={<EventList spider={spider} events={events.slice(2)} />}
+      body={<EventList spider={spider} events={events && events.slice(0, 2)} />}
+      expandableContent={
+        <EventList spider={spider} events={events && events.slice(2)} />
+      }
     />
   );
 };

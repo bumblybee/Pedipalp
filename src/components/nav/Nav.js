@@ -31,9 +31,12 @@ const useStyles = makeStyles((theme) => ({
 
 const Nav = () => {
   const { pathname } = useLocation();
-  const { user } = useContext(UserContext);
+  const { user, getCurrentUser } = useContext(UserContext);
   const classes = useStyles();
-  console.log(user);
+
+  useEffect(() => {
+    getCurrentUser();
+  }, [pathname]);
 
   const renderButton = () => {
     if (user) {

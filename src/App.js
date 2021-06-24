@@ -6,6 +6,7 @@ import UserProvider from "./context/UserProvider";
 import SignIn from "./pages/signIn/SignIn";
 import Nav from "./components/nav/Nav";
 import Home from "./pages/Home";
+import About from "./pages/About";
 import CreateSpider from "./pages/CreateSpider";
 import CreateEvent from "./pages/CreateEvent";
 import "./App.css";
@@ -15,6 +16,7 @@ import {
   lightBlue,
   lightGreen,
   pink,
+  red,
 } from "@material-ui/core/colors";
 
 const mainTheme = createMuiTheme({
@@ -35,6 +37,7 @@ const tagTheme = createMuiTheme({
       main: pink[300],
       molt: lightGreen[400],
       contrastText: "#fff",
+      trash: red["A400"],
     },
     secondary: {
       main: lightBlue[300],
@@ -66,7 +69,9 @@ function App() {
               <Route path="/create-event/:id">
                 <CreateEvent />
               </Route>
-              <Route path="/about/:id">{/* <About /> */}</Route>
+              <Route path="/about/:id">
+                <About />
+              </Route>
               <Route path="/sign-in">
                 <SignIn />
               </Route>
