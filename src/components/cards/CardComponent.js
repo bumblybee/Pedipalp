@@ -10,7 +10,7 @@ import Collapse from "@material-ui/core/Collapse";
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 
-import { lime, cyan } from "@material-ui/core/colors";
+import { lime, cyan, purple } from "@material-ui/core/colors";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 const useStyles = makeStyles((theme) => ({
@@ -34,18 +34,20 @@ const useStyles = makeStyles((theme) => ({
     borderBottom: "1px solid #bdbdbddd",
     color: "#fff",
     background: cyan[200],
+    textShadow: "0 1px 1px rgba(0,0,0,0.1)",
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   expandOpen: {
     transform: "rotate(180deg)",
   },
   avatar: {
-    backgroundColor: lime[500],
+    backgroundColor: lime[400],
+    boxShadow: "0 1px 1px rgba(0,0,0,0.1)",
   },
   content: {
     padding: "0 0.5rem 0 0.5rem",
-  },
-  button: {
-    color: cyan[700],
   },
 
   expandable: {

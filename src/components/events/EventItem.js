@@ -7,7 +7,6 @@ import OpacityIcon from "@material-ui/icons/Opacity";
 import FastfoodIcon from "@material-ui/icons/Fastfood";
 import SyncIcon from "@material-ui/icons/Sync";
 import Typography from "@material-ui/core/Typography";
-import { lime, cyan } from "@material-ui/core/colors";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   },
   inline: {
     padding: "0 1rem 1rem",
-    borderBottom: "1px solid #bdbdbd55",
+    borderBottom: "1px solid rgba(0, 0, 0, 0.075)",
   },
   tags: {
     display: "flex",

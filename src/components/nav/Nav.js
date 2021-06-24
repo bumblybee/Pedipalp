@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-
+import { lime, purple } from "@material-ui/core/colors";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
@@ -28,7 +28,8 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   button: {
-    color: "#fff",
+    color: purple[500],
+    background: lime["A400"],
   },
 }));
 
