@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
     }),
   },
   header: {
-    borderBottom: "1px solid #bdbdbddd",
+    borderBottom: `1px solid ${cyan[200]}`,
     color: "#fff",
     background: cyan[200],
     textShadow: "0 1px 1px rgba(0,0,0,0.1)",
@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: "0 1px 1px rgba(0,0,0,0.1)",
   },
   content: {
-    padding: "0 0.5rem 0 0.5rem",
+    // padding: "0.5rem",
   },
 
   expandable: {

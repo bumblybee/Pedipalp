@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { ThemeProvider } from "@material-ui/styles";
 import { createMuiTheme } from "@material-ui/core/styles";
-import SpiderProvider from "./context/SpiderProvider";
+import UserProvider from "./context/UserProvider";
 import Nav from "./components/nav/Nav";
 import Home from "./pages/Home";
 import CreateSpider from "./pages/CreateSpider";
@@ -45,7 +45,7 @@ function App() {
     <Router>
       <Switch>
         <ThemeProvider theme={mainTheme}>
-          <SpiderProvider>
+          <UserProvider>
             <div className="App">
               <Nav />
               <Route path="/" exact>
@@ -60,7 +60,7 @@ function App() {
                 <CreateEvent />
               </Route>
             </div>
-          </SpiderProvider>
+          </UserProvider>
         </ThemeProvider>
       </Switch>
     </Router>
