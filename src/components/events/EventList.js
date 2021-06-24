@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import EventItem from "./EventItem";
@@ -10,12 +10,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const EventList = ({ spider }) => {
+const EventList = ({ spider, events }) => {
   const classes = useStyles();
 
   return (
     <List className={classes.root}>
-      <EventItem />
+      {events &&
+        events.map((event) => <EventItem spider={spider} event={event} />)}
     </List>
   );
 };

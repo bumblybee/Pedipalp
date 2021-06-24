@@ -26,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
   },
   li: {
     width: "100%",
+    paddingTop: 0,
   },
   date: {
     display: "flex",
@@ -34,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const EventItem = () => {
+const EventItem = ({ event }) => {
   const classes = useStyles();
 
   return (
@@ -44,7 +45,7 @@ const EventItem = () => {
         className={`${classes.date} ${classes.li}`}
       >
         <Typography variant="subtitle2" color="textPrimary">
-          06/20/2021
+          {event.date}
         </Typography>
         <Typography variant="caption" color="textPrimary">
           3 days ago
@@ -52,10 +53,11 @@ const EventItem = () => {
       </ListItem>
       <ListItem className={classes.li}>
         <div className={classes.tags}>
-          <FastfoodIcon color="primary" fontSize="small" />
-          <OpacityIcon color="secondary" fontSize="small" />
-
-          <SyncIcon fontSize="small" className={classes.molt} />
+          {event.ate && <FastfoodIcon color="primary" fontSize="small" />}
+          {event.drank && <OpacityIcon color="secondary" fontSize="small" />}
+          {event.molted && (
+            <SyncIcon fontSize="small" className={classes.molt} />
+          )}
         </div>
       </ListItem>
       <ListItemText
@@ -64,7 +66,7 @@ const EventItem = () => {
         secondary={
           <React.Fragment>
             <Typography component="span" variant="body2" color="textPrimary">
-              Ate and drank today after molting. Successful molt.
+              {event.notes}
             </Typography>
           </React.Fragment>
         }

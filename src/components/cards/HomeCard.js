@@ -1,7 +1,7 @@
-import React, { useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-
+import { getEvents } from "../../api/eventApi";
 import { cyan } from "@material-ui/core/colors";
 import IconButton from "@material-ui/core/IconButton";
 import AddIcon from "@material-ui/icons/Add";
@@ -16,6 +16,17 @@ const useStyles = makeStyles((theme) => ({
 
 const HomeCard = ({ spider }) => {
   const classes = useStyles();
+  const [events, setEvents] = useState([]);
+
+  const fetchEvents = async () => {
+    const res = await getEvents(spider.id);
+    console.log(res);
+    setEvents(res.data);
+  };
+
+  useEffect(() => {
+    fetchEvents();
+  }, []);
 
   const headerButton = (
     <Link to={`/create-event/${spider.id}`}>
@@ -29,7 +40,8 @@ const HomeCard = ({ spider }) => {
     <CardComponent
       spider={spider}
       headerButton={headerButton}
-      body={<EventList spider={spider} />}
+      body={<EventList spider={spider} events={events.slice(0, 2)} />}
+      expandableContent={<EventList spider={spider} events={events.slice(2)} />}
     />
   );
 };

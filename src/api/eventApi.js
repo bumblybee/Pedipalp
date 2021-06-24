@@ -15,8 +15,8 @@ export const getEvent = async (id) => {
   return event && event.data ? event.data : event;
 };
 
-export const getEvents = async () => {
-  const events = await get("/events");
+export const getEvents = async (id) => {
+  const events = await get(`/events/${id}`);
   return events && events.data ? events.data : events;
 };
 
