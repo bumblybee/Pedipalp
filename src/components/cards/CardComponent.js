@@ -1,5 +1,5 @@
 import React from "react";
-import { lime, cyan, red, lightBlue, green } from "@material-ui/core/colors";
+
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import Card from "@material-ui/core/Card";
@@ -9,8 +9,8 @@ import CardActions from "@material-ui/core/CardActions";
 import Collapse from "@material-ui/core/Collapse";
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
-import { orange } from "@material-ui/core/colors";
+
+import { lime, cyan } from "@material-ui/core/colors";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 const useStyles = makeStyles((theme) => ({
@@ -32,18 +32,23 @@ const useStyles = makeStyles((theme) => ({
   },
   header: {
     borderBottom: "1px solid #bdbdbddd",
+    color: "#212121",
   },
   expandOpen: {
     transform: "rotate(180deg)",
   },
   avatar: {
-    backgroundColor: orange[400],
+    backgroundColor: lime[500],
   },
   content: {
-    padding: 0,
+    padding: "0 0.5rem 0 0.5rem",
   },
   button: {
     color: cyan[700],
+  },
+
+  expandable: {
+    padding: 0,
   },
 }));
 
@@ -61,6 +66,7 @@ const CardComponent = ({ spider, headerButton, body, expandableContent }) => {
     <Card className={classes.root} raised>
       <CardHeader
         className={classes.header}
+        titleTypographyProps={{ variant: "h6" }}
         avatar={
           <Avatar aria-label="name" className={classes.avatar}>
             {spider.name.charAt(0)}
@@ -74,7 +80,7 @@ const CardComponent = ({ spider, headerButton, body, expandableContent }) => {
       />
 
       <CardContent className={classes.content}>{body}</CardContent>
-      <CardActions disableSpacing>
+      <CardActions className={classes.expandable}>
         <IconButton
           className={clsx(classes.expand, {
             [classes.expandOpen]: expanded,
@@ -86,9 +92,16 @@ const CardComponent = ({ spider, headerButton, body, expandableContent }) => {
           <ExpandMoreIcon />
         </IconButton>
       </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
+      <Collapse
+        in={expanded}
+        timeout="auto"
+        unmountOnExit
+        className={classes.expandable}
+      >
         {/* Here is where can put all previous records */}
-        <CardContent>{expandableContent}</CardContent>
+        <CardContent className={classes.content}>
+          {expandableContent}
+        </CardContent>
       </Collapse>
     </Card>
   );
