@@ -54,6 +54,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    console.log(userData);
     const res = await logUserIn(userData);
 
     setLoading(false);
@@ -73,8 +74,11 @@ const Login = () => {
     >
       <Card className={classes.root} raised>
         <CardContent>
-          <Typography variant="h6" component="h2" gutterBottom>
+          <Typography variant="h6" component="h2">
             Log in
+          </Typography>
+          <Typography variant="p" gutterBottom>
+            New user? Click sign up above
           </Typography>
           <form
             onSubmit={handleSubmit}
@@ -87,7 +91,10 @@ const Login = () => {
               <Input
                 id="username"
                 onChange={(e) =>
-                  setUserData({ ...userData, username: e.target.value.trim() })
+                  setUserData({
+                    ...userData,
+                    username: e.target.value.trim().toLowerCase(),
+                  })
                 }
               />
             </FormControl>

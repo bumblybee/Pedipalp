@@ -77,8 +77,11 @@ const Signup = () => {
     >
       <Card className={classes.root} raised>
         <CardContent>
-          <Typography variant="h6" component="h2" gutterBottom>
+          <Typography variant="h6" component="h2">
             Sign up
+          </Typography>
+          <Typography variant="span" gutterBottom>
+            Create a new account
           </Typography>
           <form
             onSubmit={handleSubmit}
@@ -91,7 +94,10 @@ const Signup = () => {
               <Input
                 id="username"
                 onChange={(e) =>
-                  setUserData({ ...userData, username: e.target.value.trim() })
+                  setUserData({
+                    ...userData,
+                    username: e.target.value.trim().toLowerCase(),
+                  })
                 }
                 required
               />

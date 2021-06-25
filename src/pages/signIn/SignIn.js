@@ -23,9 +23,10 @@ const SignIn = () => {
   const renderForm = () => {
     switch (value) {
       case 0:
-        return <Signup />;
-      case 1:
         return <Login />;
+
+      case 1:
+        return <Signup />;
       default:
         return "";
     }
@@ -40,8 +41,8 @@ const SignIn = () => {
         textColor="primary"
         centered
       >
-        <Tab label="Sign up" />
         <Tab label="Log in" />
+        <Tab label="Sign up" />
       </Tabs>
       {renderForm()}
     </>
