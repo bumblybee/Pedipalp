@@ -91,7 +91,7 @@ const Signup = () => {
               <Input
                 id="username"
                 onChange={(e) =>
-                  setUserData({ ...userData, username: e.target.value })
+                  setUserData({ ...userData, username: e.target.value.trim() })
                 }
                 required
               />
@@ -102,7 +102,7 @@ const Signup = () => {
                 id="password"
                 type="password"
                 onChange={(e) =>
-                  setUserData({ ...userData, password: e.target.value })
+                  setUserData({ ...userData, password: e.target.value.trim() })
                 }
                 required
               />

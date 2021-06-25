@@ -2,6 +2,8 @@ import React, { useState, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { UserContext } from "../../context/UserContext";
+import { NotificationContext } from "../../context/notification/NotificationContext";
+
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
@@ -42,7 +44,10 @@ const useStyles = makeStyles({
 const Login = () => {
   const classes = useStyles();
   const history = useHistory();
+
   const { logUserIn } = useContext(UserContext);
+  const { setNotificationMessage } = useContext(NotificationContext);
+
   const [loading, setLoading] = useState(false);
   const [userData, setUserData] = useState({ username: "", password: "" });
 
@@ -50,9 +55,10 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
     const res = await logUserIn(userData);
-    console.log(res);
+
     setLoading(false);
     if (res && !res.error) history.push("/");
+    if (res && res.error) setNotificationMessage(res.error, "error", true);
   };
 
   return (
@@ -81,7 +87,7 @@ const Login = () => {
               <Input
                 id="username"
                 onChange={(e) =>
-                  setUserData({ ...userData, username: e.target.value })
+                  setUserData({ ...userData, username: e.target.value.trim() })
                 }
               />
             </FormControl>
@@ -91,7 +97,7 @@ const Login = () => {
                 id="password"
                 type="password"
                 onChange={(e) =>
-                  setUserData({ ...userData, password: e.target.value })
+                  setUserData({ ...userData, password: e.target.value.trim() })
                 }
               />
             </FormControl>
