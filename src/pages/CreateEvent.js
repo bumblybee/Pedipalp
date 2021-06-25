@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link, useHistory, useParams } from "react-router-dom";
 import moment from "moment";
 import { createEvent } from "../api/eventApi";
+import { NotificationContext } from "../context/notification/NotificationContext";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CircularProgress from "@material-ui/core/CircularProgress";
-
 import FormControl from "@material-ui/core/FormControl";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
@@ -44,6 +44,7 @@ const CreateEvent = () => {
   const classes = useStyles();
   const history = useHistory();
   const { id } = useParams();
+  const { setNotificationMessage } = useContext(NotificationContext);
 
   const [loading, setLoading] = useState(false);
   const [eventData, setEventData] = useState({
@@ -62,15 +63,19 @@ const CreateEvent = () => {
     e.preventDefault();
     setLoading(true);
 
-    // console.log(eventData);
-    const res = await createEvent({ ...eventData, spiderId: id });
-    console.log(res);
+    if (eventData.date) {
+      // console.log(eventData);
+      const res = await createEvent({ ...eventData, spiderId: id });
 
-    if (res && !res.data) {
-      setLoading(false);
+      if (res && !res.error) {
+        setLoading(false);
+        history.push("/");
+      } else {
+        setLoading(false);
+        setNotificationMessage(res.error, "error", true);
+      }
     } else {
-      setLoading(false);
-      history.push("/");
+      setNotificationMessage("Please enter a date", "error", true);
     }
   };
 
