@@ -1,12 +1,12 @@
-import { get, post, destroy } from "./baseApi";
+import { get, post, put, destroy } from "./baseApi";
 
 export const createEvent = async (data) => {
   const event = await post("/events", data);
   return event.data ? event.data : event;
 };
 
-export const mutateEvent = async (data, id) => {
-  const event = await post(`/events/${id}`, data);
+export const updateEvent = async (data, id) => {
+  const event = await put(`/events/${id}`, data);
   return event.data ? event.data : event;
 };
 
@@ -16,7 +16,7 @@ export const getEvent = async (id) => {
 };
 
 export const getEvents = async (id) => {
-  const events = await get(`/events/${id}`);
+  const events = await get(`/events/spider/${id}`);
   return events && events.data ? events.data : events;
 };
 

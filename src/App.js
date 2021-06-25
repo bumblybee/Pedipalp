@@ -11,6 +11,7 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import CreateSpider from "./pages/CreateSpider";
 import CreateEvent from "./pages/CreateEvent";
+import EditEvent from "./pages/EditEvent";
 import "./App.css";
 import {
   lime,
@@ -67,13 +68,16 @@ function App() {
                     <Home />
                   </ThemeProvider>
                 </Route>
-                <Route path="/create-spider">
+                <Route path="/create-spider" exact>
                   <CreateSpider />
                 </Route>
-                <Route path="/create-event/:id">
+                <Route path="/create-event/:id" exact>
                   <CreateEvent />
                 </Route>
-                <Route path="/about/:id">
+                <Route path="/edit-event/:id" exact>
+                  <EditEvent />
+                </Route>
+                <Route path="/about/:id" exact>
                   <About />
                 </Route>
                 <Route path="/sign-in">

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import moment from "moment";
 import { makeStyles } from "@material-ui/core/styles";
 import ListItem from "@material-ui/core/ListItem";
@@ -6,7 +7,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import OpacityIcon from "@material-ui/icons/Opacity";
 import FastfoodIcon from "@material-ui/icons/Fastfood";
 import SyncIcon from "@material-ui/icons/Sync";
-import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
+import CreateIcon from "@material-ui/icons/Create";
 import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles((theme) => ({
@@ -42,9 +43,12 @@ const useStyles = makeStyles((theme) => ({
   delete: {
     color: theme.palette.primary.trash,
   },
+  pencil: {
+    color: "#757575",
+  },
 }));
 
-const EventItem = ({ event }) => {
+const EventItem = ({ spider, event }) => {
   const classes = useStyles();
 
   const countDays = () => {
@@ -78,6 +82,9 @@ const EventItem = ({ event }) => {
         <Typography variant="caption" className={classes.days}>
           {renderDays()}
         </Typography>
+        <Link to={`/edit-event/${event.id}`}>
+          <CreateIcon className={classes.pencil} fontSize="small" />
+        </Link>
       </ListItem>
       <ListItem className={classes.li}>
         <div className={classes.tags}>

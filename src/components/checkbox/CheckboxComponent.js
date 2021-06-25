@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { green, red, lightBlue } from "@material-ui/core/colors";
 import FormGroup from "@material-ui/core/FormGroup";
@@ -20,9 +20,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CheckboxComponent = ({ handleChecked }) => {
+const CheckboxComponent = ({ handleChecked, eventData }) => {
   const classes = useStyles();
-  const [checked, setChecked] = React.useState({
+  const [checked, setChecked] = useState({
     ate: false,
     drank: false,
     molted: false,
@@ -34,11 +34,21 @@ const CheckboxComponent = ({ handleChecked }) => {
     handleChecked(e);
   };
 
+  useEffect(() => {
+    eventData &&
+      setChecked({
+        ate: eventData.ate,
+        drank: eventData.drank,
+        molted: eventData.molted,
+      });
+  }, [eventData]);
+
   return (
     <FormGroup row>
       <FormControlLabel
         control={
           <Checkbox
+            size="small"
             icon={<FastfoodIcon />}
             checkedIcon={<FastfoodIcon className={classes.ate} />}
             name="ate"
@@ -52,6 +62,7 @@ const CheckboxComponent = ({ handleChecked }) => {
       <FormControlLabel
         control={
           <Checkbox
+            size="small"
             icon={<OpacityIcon />}
             checkedIcon={<OpacityIcon className={classes.drank} />}
             name="drank"
@@ -64,6 +75,7 @@ const CheckboxComponent = ({ handleChecked }) => {
       <FormControlLabel
         control={
           <Checkbox
+            size="small"
             icon={<SyncIcon />}
             checkedIcon={<SyncIcon className={classes.molt} />}
             name="molted"

@@ -4,12 +4,8 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    height: "70vh",
+    height: "35vh",
     width: "100%",
-    // display: "flex",
-    // flexDirection: "column",
-    // justifyContent: "space-between",
-    // alignItems: "center",
   },
   text: {
     textAlign: "left",

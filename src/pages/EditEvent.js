@@ -1,14 +1,13 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Link, useHistory, useParams } from "react-router-dom";
 import moment from "moment";
-import { createEvent } from "../api/eventApi";
-import { getSpider } from "../api/spiderApi";
+import { updateEvent, getEvent } from "../api/eventApi";
 import { NotificationContext } from "../context/notification/NotificationContext";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import CardHeader from "@material-ui/core/CardHeader";
-import CardContent from "@material-ui/core/CardContent";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import FormControl from "@material-ui/core/FormControl";
 import Button from "@material-ui/core/Button";
@@ -40,9 +39,20 @@ const useStyles = makeStyles({
   button: {
     marginLeft: "auto",
   },
+  date: {
+    content: "",
+    "&::before": {
+      content: "attr(placeholder) !important",
+      color: "#aaa",
+      marginRight: "0.5em",
+    },
+    "&:focus:before": {
+      content: "",
+    },
+  },
 });
 
-const CreateEvent = () => {
+const EditEvent = () => {
   const classes = useStyles();
   const history = useHistory();
   const { id } = useParams();
@@ -65,29 +75,36 @@ const CreateEvent = () => {
     e.preventDefault();
     setLoading(true);
 
-    if (eventData.date) {
-      const res = await createEvent({ ...eventData, spiderId: id });
+    const res = await updateEvent(eventData, id);
 
-      if (res && !res.error) {
-        setLoading(false);
-        history.push("/");
-      } else {
-        setLoading(false);
-        setNotificationMessage(res.error, "error", true);
-      }
+    if (res && !res.error) {
+      setLoading(false);
+      history.push("/");
     } else {
-      setNotificationMessage("Please enter a date", "error", true);
+      setLoading(false);
+      setNotificationMessage(res.error, "error", true);
     }
   };
 
-  const fetchSpider = async () => {
-    const res = await getSpider(id);
+  const fetchEvent = async () => {
+    const res = await getEvent(id);
 
-    res && setSpider(res.data);
+    const data = {
+      ate: res.data.ate,
+      drank: res.data.drank,
+      molted: res.data.molted,
+      notes: res.data.notes,
+      date: res.data.date,
+    };
+
+    if (res && res.data) {
+      setEventData(data);
+      setSpider(res.data.spider);
+    }
   };
 
   useEffect(() => {
-    fetchSpider();
+    fetchEvent();
   }, []);
 
   return (
@@ -104,7 +121,7 @@ const CreateEvent = () => {
         <CardHeader
           className={classes.header}
           titleTypographyProps={{ variant: "h6" }}
-          title={spider && spider.name && `Create ${spider.name}'s Event`}
+          title={spider && spider.name && `Edit ${spider.name}'s Event`}
         />
         <CardContent>
           <form
@@ -115,29 +132,38 @@ const CreateEvent = () => {
           >
             <FormControl className={classes.formItem}>
               <TextField
+                className={classes.date}
                 id="date"
                 label="Date"
                 type="date"
                 max={moment().format("YYYY-MM-DD")}
-                defaultValue=""
+                defaultValue={eventData.date}
+                value={eventData.date}
                 InputLabelProps={{
                   shrink: true,
+                }}
+                inputProps={{
+                  placeholder: eventData.date,
                 }}
                 onChange={(e) =>
                   setEventData({ ...eventData, date: e.target.value })
                 }
               />
             </FormControl>
+
             <FormControl className={classes.formItem}>
-              <CheckboxComponent handleChecked={handleChecked} />
+              <CheckboxComponent
+                handleChecked={handleChecked}
+                eventData={eventData}
+              />
             </FormControl>
 
             <FormControl className={classes.formItem}>
               <TextField
-                label="Notes..."
                 multiline
                 rows={10}
                 variant="outlined"
+                value={eventData.notes}
                 onChange={(e) =>
                   setEventData({ ...eventData, notes: e.target.value })
                 }
@@ -181,4 +207,4 @@ const CreateEvent = () => {
   );
 };
 
-export default CreateEvent;
+export default EditEvent;

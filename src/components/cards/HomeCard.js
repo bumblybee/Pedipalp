@@ -20,7 +20,8 @@ const HomeCard = ({ spider }) => {
   const [events, setEvents] = useState([]);
 
   const fetchEvents = async () => {
-    const res = await getEvents(spider.id);
+    const id = spider.id;
+    const res = await getEvents(id);
     console.log(res);
     setEvents(res.data);
   };
