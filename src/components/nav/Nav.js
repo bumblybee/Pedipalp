@@ -11,7 +11,7 @@ import Avatar from "@material-ui/core/Avatar";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    marginBottom: "1.5rem",
+    marginBottom: "4.5rem",
   },
   toolbar: {
     display: "flex",
@@ -68,7 +68,7 @@ const Nav = () => {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static" color="primary">
+      <AppBar position="fixed" color="primary">
         <Toolbar className={classes.toolbar}>
           <Link to="/" style={{ textDecoration: "none" }}>
             <Avatar alt="spider" src="/spidercartoon.png" />
