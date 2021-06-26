@@ -49,6 +49,12 @@ const Signup = () => {
   const [loading, setLoading] = useState(false);
   const [userData, setUserData] = useState({ username: "", password: "" });
 
+  const handleKeyDown = (e) => {
+    if (e.keyCode === 13) {
+      handleSubmit(e);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -85,6 +91,7 @@ const Signup = () => {
           </Typography>
           <form
             onSubmit={handleSubmit}
+            onKeyDown={handleKeyDown}
             className={classes.root}
             noValidate
             autoComplete="off"
