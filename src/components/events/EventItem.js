@@ -2,11 +2,14 @@ import React from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
 import { makeStyles } from "@material-ui/core/styles";
+import { pink, orange, lightGreen, purple } from "@material-ui/core/colors";
+
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import OpacityIcon from "@material-ui/icons/Opacity";
 import FastfoodIcon from "@material-ui/icons/Fastfood";
 import SyncIcon from "@material-ui/icons/Sync";
+import ChildFriendlyIcon from "@material-ui/icons/ChildFriendly";
 import CreateIcon from "@material-ui/icons/Create";
 import Typography from "@material-ui/core/Typography";
 
@@ -19,23 +22,34 @@ const useStyles = makeStyles((theme) => ({
     padding: "0 1rem 1rem",
     borderBottom: "1px solid rgba(0, 0, 0, 0.075)",
   },
-  tags: {
-    display: "flex",
-    justifyContent: "flex-start",
-    width: "24%",
+  ate: {
+    color: orange[500],
   },
   molt: {
-    color: theme.palette.primary.molt,
+    color: lightGreen[500],
+  },
+  slings: {
+    color: purple[300],
   },
   li: {
     width: "100%",
     paddingTop: "0.25rem",
+    "&:first-child": {
+      paddingRight: "0.25rem",
+    },
+  },
+  tags: {
+    display: "flex",
+    justifyContent: "flex-start",
+    "& svg": {
+      marginRight: "0.25rem",
+    },
   },
   date: {
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    color: "#757575",
+    color: "#565656",
   },
   days: {
     color: "#757575",
@@ -44,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.primary.trash,
   },
   pencil: {
-    color: "#757575",
+    color: "#bbbccc",
   },
 }));
 
@@ -88,10 +102,16 @@ const EventItem = ({ spider, event }) => {
       </ListItem>
       <ListItem className={classes.li}>
         <div className={classes.tags}>
-          {event.ate && <FastfoodIcon color="primary" fontSize="small" />}
+          {event.ate && (
+            <FastfoodIcon className={classes.ate} fontSize="small" />
+          )}
           {event.drank && <OpacityIcon color="secondary" fontSize="small" />}
+
           {event.molted && (
             <SyncIcon fontSize="small" className={classes.molt} />
+          )}
+          {event.slings && (
+            <ChildFriendlyIcon className={classes.slings} fontSize="small" />
           )}
         </div>
       </ListItem>

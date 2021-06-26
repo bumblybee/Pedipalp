@@ -11,7 +11,7 @@ import EventList from "../events/EventList";
 const useStyles = makeStyles((theme) => ({
   button: {
     color: purple[500],
-    textShadow: "0 1px 1px rgba(0,0,0,0.2)",
+    textShadow: "0 1px 1px rgba(0,0,0,0.8)",
   },
 }));
 

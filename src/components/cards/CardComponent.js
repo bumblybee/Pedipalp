@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     backgroundColor: lime["A700"],
-    boxShadow: "0 1px 1px rgba(0,0,0,0.2)",
+    boxShadow: "0 0 2px rgba(0,0,0,0.15)",
   },
   content: {
     paddingBottom: 0,
@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   expandable: {
-    padding: 0,
+    padding: "0 0.35rem 0 0",
   },
 }));
 

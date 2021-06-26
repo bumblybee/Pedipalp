@@ -64,6 +64,7 @@ const EditEvent = () => {
     ate: false,
     drank: false,
     molted: false,
+    slings: false,
     notes: "",
   });
 
@@ -89,15 +90,16 @@ const EditEvent = () => {
   const fetchEvent = async () => {
     const res = await getEvent(id);
 
-    const data = {
-      ate: res.data.ate,
-      drank: res.data.drank,
-      molted: res.data.molted,
-      notes: res.data.notes,
-      date: res.data.date,
-    };
-
     if (res && res.data) {
+      const data = {
+        ate: res.data.ate,
+        drank: res.data.drank,
+        molted: res.data.molted,
+        slings: res.data.slings || false,
+        notes: res.data.notes,
+        date: res.data.date,
+      };
+
       setEventData(data);
       setSpider(res.data.spider);
     }

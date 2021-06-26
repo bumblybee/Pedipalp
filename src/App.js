@@ -43,7 +43,7 @@ const tagTheme = createMuiTheme({
       trash: red["A400"],
     },
     secondary: {
-      main: lightBlue[300],
+      main: lightBlue[400],
       light: lime[300],
       contrastText: "#fff",
     },
