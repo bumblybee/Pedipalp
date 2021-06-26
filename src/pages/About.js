@@ -1,25 +1,34 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import AboutSection from "../components/about/AboutSection";
-import { getSpider } from "../api/spiderApi";
-import { cyan, purple } from "@material-ui/core/colors";
-import EventList from "../components/events/EventList";
-import IconButton from "@material-ui/core/IconButton";
-import AddIcon from "@material-ui/icons/Add";
+import { getSpider, deleteSpider } from "../api/spiderApi";
+import { red } from "@material-ui/core/colors";
+import DeleteIcon from "@material-ui/icons/Delete";
+import Chip from "@material-ui/core/Chip";
 import CardComponent from "../components/cards/CardComponent";
 
 const useStyles = makeStyles((theme) => ({
   button: {
-    color: purple[500],
-    textShadow: "0 1px 1px rgba(0,0,0,0.2)",
+    color: "#fff",
+    background: red["A400"],
+    "&:not(svg)": { boxShadow: "0 0 1px rgba(0,0,0,0.1)" },
   },
 }));
 
 const About = () => {
+  const history = useHistory();
   const classes = useStyles();
   const { id } = useParams();
   const [spider, setSpider] = useState([]);
+
+  const handleDelete = async () => {
+    if (window.confirm(`Are you sure you want to delete ${spider.name}?`)) {
+      const deleted = await deleteSpider(id);
+      console.log(deleted);
+      deleted && history.push("/");
+    }
+  };
 
   const fetchSpider = async () => {
     const res = await getSpider(id);
@@ -31,8 +40,22 @@ const About = () => {
     fetchSpider();
   }, []);
 
+  const headerButton = (
+    <Chip
+      className={classes.button}
+      icon={<DeleteIcon className={classes.button} />}
+      label="Delete"
+      size="small"
+      onClick={handleDelete}
+    />
+  );
+
   return (
-    <CardComponent spider={spider} body={<AboutSection spider={spider} />} />
+    <CardComponent
+      spider={spider}
+      headerButton={headerButton}
+      body={<AboutSection spider={spider} />}
+    />
   );
 };
 

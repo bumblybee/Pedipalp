@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
     borderBottom: `1px solid ${cyan[200]}`,
     color: "#fff",
     background: cyan[200],
-    textShadow: "0 1px 1px rgba(0,0,0,0.2)",
+    textShadow: "0 1px 1px rgba(0,0,0,0.1)",
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
@@ -90,10 +90,7 @@ const CardComponent = ({ spider, headerButton, body, expandableContent }) => {
             </Avatar>
           </Link>
         }
-        action={
-          // Put details link here
-          headerButton
-        }
+        action={headerButton}
         title={spider && spider.name && spider.name}
       />
 
