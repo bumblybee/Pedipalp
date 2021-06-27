@@ -33,9 +33,8 @@ const useStyles = makeStyles((theme) => ({
   li: {
     width: "100%",
     paddingTop: "0.25rem",
-    "&:first-child": {
-      paddingRight: "0.25rem",
-    },
+
+    paddingRight: "0.25rem",
   },
   tags: {
     display: "flex",
