@@ -1,12 +1,12 @@
-import { get, post, destroy } from "./baseApi";
+import { get, post, put, destroy } from "./baseApi";
 
 export const createSpider = async (data) => {
   const spider = await post("/", data);
   return spider.data ? spider.data : spider;
 };
 
-export const mutateSpider = async (data, id) => {
-  const spider = await post(`/${id}`, data);
+export const editSpider = async (data, id) => {
+  const spider = await put(`/${id}`, data);
   return spider.data ? spider.data : spider;
 };
 

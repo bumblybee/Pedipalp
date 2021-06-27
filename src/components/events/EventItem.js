@@ -2,8 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
 import { makeStyles } from "@material-ui/core/styles";
-import { pink, orange, lightGreen, purple } from "@material-ui/core/colors";
-
+import { orange, lightGreen, purple } from "@material-ui/core/colors";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import OpacityIcon from "@material-ui/icons/Opacity";

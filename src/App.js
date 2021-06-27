@@ -10,6 +10,7 @@ import Nav from "./components/nav/Nav";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import CreateSpider from "./pages/CreateSpider";
+import EditSpider from "./pages/EditSpider";
 import CreateEvent from "./pages/CreateEvent";
 import EditEvent from "./pages/EditEvent";
 import "./App.css";
@@ -70,6 +71,9 @@ function App() {
                 </Route>
                 <Route path="/create-spider" exact>
                   <CreateSpider />
+                </Route>
+                <Route path="/edit-spider/:id" exact>
+                  <EditSpider />
                 </Route>
                 <Route path="/create-event/:id" exact>
                   <CreateEvent />
