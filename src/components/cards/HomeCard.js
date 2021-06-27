@@ -42,9 +42,9 @@ const HomeCard = ({ spider }) => {
     <CardComponent
       spider={spider}
       headerButton={headerButton}
-      body={<EventList spider={spider} events={events && events.slice(0, 2)} />}
+      body={<EventList spider={spider} events={events && events.slice(0, 1)} />}
       expandableContent={
-        <EventList spider={spider} events={events && events.slice(2)} />
+        <EventList spider={spider} events={events && events.slice(1)} />
       }
     />
   );

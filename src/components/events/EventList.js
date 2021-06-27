@@ -18,7 +18,7 @@ const EventList = ({ spider, events }) => {
   return (
     <List className={classes.root}>
       {events &&
-        events.map((event) => <EventItem spider={spider} event={event} />)}
+        events.map((event) => <EventItem key={event.id} spider={spider} event={event} />)}
     </List>
   );
 };
