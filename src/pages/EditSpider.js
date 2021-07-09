@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Link, useHistory, useParams } from "react-router-dom";
+import crypto from "crypto";
+import S3 from "react-aws-s3";
+import { s3Config } from "../config/s3Config";
 import { editSpider, getSpider } from "../api/spiderApi";
 import { makeStyles } from "@material-ui/core/styles";
+import Avatar from "@material-ui/core/Avatar";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
@@ -31,6 +35,7 @@ const useStyles = makeStyles({
     width: "100%",
     margin: "0 auto 1.5rem",
   },
+
   buttonWrapper: {
     marginRight: "0.75rem",
     marginTop: "-2.5rem",
@@ -41,30 +46,47 @@ const useStyles = makeStyles({
 });
 
 const EditSpider = () => {
+  const ReactS3Client = new S3(s3Config);
   const classes = useStyles();
   const history = useHistory();
   const { id } = useParams();
   const [loading, setLoading] = useState(false);
-
+  const [storedImage, setStoredImage] = useState("");
+  const [newImage, setNewImage] = useState();
   const [spiderData, setSpiderData] = useState({
     name: "",
     species: "",
     age: Number,
     about: "",
+    image: "",
   });
 
   const fetchSpider = async () => {
     const res = await getSpider(id);
     if (res && res.data) {
       setSpiderData(res.data);
+      setStoredImage(res.data.image);
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    console.log(spiderData);
-    const res = await editSpider(spiderData, id);
+    const url = await handleImageUpload();
+
+    if (url && storedImage && storedImage !== url) {
+      deletePrevImage();
+    }
+
+    const data = {
+      name: spiderData.name,
+      age: spiderData.age,
+      species: spiderData.species,
+      about: spiderData.about,
+      image: url ? url : spiderData.image,
+    };
+
+    const res = await editSpider(data, id);
     console.log(res);
     if (res && !res.data) {
       setLoading(false);
@@ -72,6 +94,35 @@ const EditSpider = () => {
       setLoading(false);
       history.push("/");
     }
+  };
+
+  const deletePrevImage = () => {
+    const storedImageSegments = storedImage.split("/");
+    const imageToDelete = storedImageSegments[storedImageSegments.length - 1];
+
+    ReactS3Client.deleteFile(imageToDelete)
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((err) => console.error(err));
+  };
+
+  const handleImageUpload = () => {
+    if (newImage && newImage.name) {
+      const randomId = crypto.randomBytes(2).toString("hex");
+      const imageName = newImage.name.split(".")[0] + "_" + randomId;
+
+      return ReactS3Client.uploadFile(newImage, imageName)
+        .then((data) => data.location)
+        .catch((err) => console.error(err));
+    } else {
+      return null;
+    }
+  };
+
+  const handleNewImage = (e) => {
+    const file = e.target.files[0];
+    setNewImage(file);
   };
 
   useEffect(() => {
@@ -139,12 +190,25 @@ const EditSpider = () => {
                 }
               />
             </FormControl>
-            {/* <FormControl className={classes.formItem}>
+            <FormControl className={classes.formItem}>
               <InputLabel htmlFor="photo" shrink>
                 Photo
               </InputLabel>
-              <Input id="photo" type="file" disableUnderline />
-            </FormControl> */}
+              <Input
+                id="photo"
+                type="file"
+                disableUnderline
+                placeholder={spiderData.image}
+                onChange={handleNewImage}
+              />
+              {spiderData && spiderData.image && (
+                <Avatar
+                  src={
+                    newImage ? URL.createObjectURL(newImage) : spiderData.image
+                  }
+                />
+              )}
+            </FormControl>
             <FormControl className={classes.formItem}>
               <TextField
                 label="About"

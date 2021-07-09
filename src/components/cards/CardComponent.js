@@ -70,7 +70,7 @@ const CardComponent = ({ spider, headerButton, body, expandableContent }) => {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-
+  console.log(spider);
   return (
     <Card className={classes.root} raised>
       <CardHeader
@@ -85,7 +85,11 @@ const CardComponent = ({ spider, headerButton, body, expandableContent }) => {
                 : "/"
             }
           >
-            <Avatar aria-label="name" className={classes.avatar}>
+            <Avatar
+              aria-label="name"
+              className={classes.avatar}
+              src={spider && spider.image && spider.image}
+            >
               {spider && spider.name && spider.name.charAt(0)}
             </Avatar>
           </Link>

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
+import S3 from "react-aws-s3";
+import { s3Config } from "../config/s3Config";
 import { makeStyles } from "@material-ui/core/styles";
 import AboutSection from "../components/about/AboutSection";
 import { getSpider, deleteSpider } from "../api/spiderApi";
@@ -24,10 +26,25 @@ const About = () => {
 
   const handleDelete = async () => {
     if (window.confirm(`Are you sure you want to delete ${spider.name}?`)) {
+      if (spider.image) await deletePrevImage();
+
       const deleted = await deleteSpider(id);
       console.log(deleted);
       deleted && history.push("/");
     }
+  };
+
+  const deletePrevImage = () => {
+    const ReactS3Client = new S3(s3Config);
+
+    const storedImageSegments = spider.image.split("/");
+    const imageToDelete = storedImageSegments[storedImageSegments.length - 1];
+
+    ReactS3Client.deleteFile(imageToDelete)
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((err) => console.error(err));
   };
 
   const fetchSpider = async () => {

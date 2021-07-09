@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
+import crypto from "crypto";
+import S3 from "react-aws-s3";
+import { s3Config } from "../config/s3Config";
 import { createSpider } from "../api/spiderApi";
 import { makeStyles } from "@material-ui/core/styles";
+import Avatar from "@material-ui/core/Avatar";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
@@ -44,25 +48,61 @@ const CreateSpider = () => {
   const classes = useStyles();
   const history = useHistory();
   const [loading, setLoading] = useState(false);
+  const [newImage, setNewImage] = useState();
+
   const [spiderData, setSpiderData] = useState({
     name: "",
     species: "",
     age: Number,
     about: "",
+    image: "",
   });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
-    const res = await createSpider(spiderData);
-    console.log(res);
-    if (res && !res.data) {
-      setLoading(false);
-    } else {
-      setLoading(false);
-      history.push("/");
+    if (spiderData.name) {
+      const url = await handleImageUpload();
+
+      const data = {
+        name: spiderData.name,
+        age: spiderData.age,
+        species: spiderData.species,
+        about: spiderData.about,
+        image: url ? url : spiderData.image,
+      };
+
+      const res = await createSpider(data);
+      console.log(res);
+
+      if (res && !res.data) {
+        setLoading(false);
+      } else {
+        setLoading(false);
+        history.push("/");
+      }
     }
+  };
+
+  const handleImageUpload = () => {
+    const ReactS3Client = new S3(s3Config);
+
+    if (newImage && newImage.name) {
+      const randomId = crypto.randomBytes(2).toString("hex");
+      const imageName = newImage.name.split(".")[0] + "_" + randomId;
+
+      return ReactS3Client.uploadFile(newImage, imageName)
+        .then((data) => data.location)
+        .catch((err) => console.error(err));
+    } else {
+      return null;
+    }
+  };
+
+  const handleNewImage = (e) => {
+    const file = e.target.files[0];
+    setNewImage(file);
   };
 
   return (
@@ -121,7 +161,17 @@ const CreateSpider = () => {
               <InputLabel htmlFor="photo" shrink>
                 Photo
               </InputLabel>
-              <Input id="photo" type="file" disableUnderline />
+              <Input
+                id="photo"
+                type="file"
+                disableUnderline
+                onChange={handleNewImage}
+              />
+              <Avatar
+                src={
+                  newImage ? URL.createObjectURL(newImage) : spiderData.image
+                }
+              />
             </FormControl>
             <FormControl className={classes.formItem}>
               <TextField

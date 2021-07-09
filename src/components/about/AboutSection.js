@@ -60,14 +60,20 @@ const AboutSection = ({ spider }) => {
           <ListItemIcon>
             <BugReportIcon className={classes.bug} />
           </ListItemIcon>
-          <ListItemText primary="Species" secondary={spider.species} />
+          <ListItemText
+            primary="Species"
+            secondary={spider.species && spider.species}
+          />
         </ListItem>
         <Divider variant="inset" component="li" />
         <ListItem>
           <ListItemIcon>
             <ScheduleIcon className={classes.clock} />
           </ListItemIcon>
-          <ListItemText primary="Age" secondary={`${spider.age} mo`} />
+          <ListItemText
+            primary="Age"
+            secondary={spider.age !== null && `${spider.age} mo`}
+          />
         </ListItem>
         <Divider variant="inset" component="li" />
         <ListItem>
