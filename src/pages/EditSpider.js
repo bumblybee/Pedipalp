@@ -73,7 +73,7 @@ const EditSpider = () => {
     e.preventDefault();
     setLoading(true);
     const url = await handleImageUpload();
-    console.log("url");
+    console.log("url", url);
     if (url && storedImage && storedImage !== url) {
       deletePrevImage();
     }
