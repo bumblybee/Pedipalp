@@ -52,7 +52,7 @@ const EditSpider = () => {
   const { id } = useParams();
   const [loading, setLoading] = useState(false);
   const [storedImage, setStoredImage] = useState("");
-  const [newImage, setNewImage] = useState();
+  const [newImage, setNewImage] = useState(null);
   const [spiderData, setSpiderData] = useState({
     name: "",
     species: "",
@@ -108,7 +108,7 @@ const EditSpider = () => {
   };
 
   const handleImageUpload = () => {
-    if (newImage && newImage.name) {
+    if (newImage) {
       const randomId = crypto.randomBytes(2).toString("hex");
       const imageName = newImage.name.split(".")[0] + "_" + randomId;
 
