@@ -108,6 +108,7 @@ const EditSpider = () => {
   };
 
   const handleImageUpload = () => {
+    console.log(newImage);
     if (newImage) {
       const randomId = crypto.randomBytes(2).toString("hex");
       const imageName = newImage.name.split(".")[0] + "_" + randomId;
@@ -201,13 +202,14 @@ const EditSpider = () => {
                 placeholder={spiderData.image}
                 onChange={handleNewImage}
               />
-              {spiderData && spiderData.image && (
-                <Avatar
-                  src={
-                    newImage ? URL.createObjectURL(newImage) : spiderData.image
-                  }
-                />
-              )}
+
+              <Avatar
+                src={
+                  newImage
+                    ? URL.createObjectURL(newImage)
+                    : spiderData && spiderData.image
+                }
+              />
             </FormControl>
             <FormControl className={classes.formItem}>
               <TextField
