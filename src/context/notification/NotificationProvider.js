@@ -10,7 +10,7 @@ const NotificationProvider = ({ children }) => {
     if (timed) {
       setTimeout(() => {
         setNotification(null);
-      }, 5000);
+      }, 4000);
     }
   };
 

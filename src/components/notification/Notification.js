@@ -6,11 +6,11 @@ import Alert from "@material-ui/lab/Alert";
 const useStyles = makeStyles({
   root: {
     position: "absolute",
-    top: "2%",
+    top: "-5%",
     left: "50%",
     transform: "translate(-50%)",
-    zIndex: "1000",
-    width: "280px",
+    zIndex: "3000",
+    width: "max-content",
     textAlign: "center",
     padding: "1rem",
   },

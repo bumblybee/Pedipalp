@@ -46,7 +46,8 @@ const Login = () => {
   const classes = useStyles();
 
   const { logUserIn } = useContext(UserContext);
-  const { setNotificationMessage } = useContext(NotificationContext);
+  const { setNotificationMessage, clearNotificationMessage } =
+    useContext(NotificationContext);
 
   const [loading, setLoading] = useState(false);
   const [userData, setUserData] = useState({ username: "", password: "" });
@@ -60,12 +61,19 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    console.log(userData);
-    const res = await logUserIn(userData);
 
-    setLoading(false);
-    if (res && !res.error) history.push("/");
-    if (res && res.error) setNotificationMessage(res.error, "error", true);
+    if (userData.username && userData.password) {
+      clearNotificationMessage();
+      const res = await logUserIn(userData);
+
+      setLoading(false);
+
+      if (res && !res.error) history.push("/");
+      if (res && res.error) setNotificationMessage(res.error, "error", true);
+    } else {
+      setNotificationMessage("Please fill in all fields", "error", true);
+      setLoading(false);
+    }
   };
 
   return (
@@ -103,6 +111,7 @@ const Login = () => {
                     username: e.target.value.trim().toLowerCase(),
                   })
                 }
+                required
               />
             </FormControl>
             <FormControl className={classes.formItem}>
@@ -113,6 +122,7 @@ const Login = () => {
                 onChange={(e) =>
                   setUserData({ ...userData, password: e.target.value.trim() })
                 }
+                required
               />
             </FormControl>
           </form>
