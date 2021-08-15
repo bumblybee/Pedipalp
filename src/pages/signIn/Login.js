@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { history } from "../../utils/customHistory";
+import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { UserContext } from "../../context/UserContext";
 import { NotificationContext } from "../../context/notification/NotificationContext";
@@ -43,7 +44,6 @@ const useStyles = makeStyles({
 
 const Login = () => {
   const classes = useStyles();
-  const history = useHistory();
 
   const { logUserIn } = useContext(UserContext);
   const { setNotificationMessage } = useContext(NotificationContext);

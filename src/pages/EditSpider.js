@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Link, useHistory, useParams } from "react-router-dom";
+import { history } from "../utils/customHistory";
+import { Link, useParams } from "react-router-dom";
 import crypto from "crypto";
 import S3 from "react-aws-s3";
 import { s3Config } from "../config/s3Config";
@@ -48,7 +49,6 @@ const useStyles = makeStyles({
 const EditSpider = () => {
   const ReactS3Client = new S3(s3Config);
   const classes = useStyles();
-  const history = useHistory();
   const { id } = useParams();
   const [loading, setLoading] = useState(false);
   const [storedImage, setStoredImage] = useState("");

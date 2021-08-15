@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import S3 from "react-aws-s3";
 import { s3Config } from "../config/s3Config";
+import { history } from "../utils/customHistory";
 import { makeStyles } from "@material-ui/core/styles";
 import AboutSection from "../components/about/AboutSection";
 import { getSpider, deleteSpider } from "../api/spiderApi";
@@ -19,7 +20,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const About = () => {
-  const history = useHistory();
   const classes = useStyles();
   const { id } = useParams();
   const [spider, setSpider] = useState([]);

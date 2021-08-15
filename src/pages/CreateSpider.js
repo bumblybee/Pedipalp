@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { history } from "../utils/customHistory";
 import crypto from "crypto";
 import S3 from "react-aws-s3";
 import { s3Config } from "../config/s3Config";
@@ -46,7 +47,6 @@ const useStyles = makeStyles({
 
 const CreateSpider = () => {
   const classes = useStyles();
-  const history = useHistory();
   const [loading, setLoading] = useState(false);
   const [newImage, setNewImage] = useState();
 

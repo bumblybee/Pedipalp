@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Link, useHistory, useParams } from "react-router-dom";
+import { history } from "../utils/customHistory";
+import { Link, useParams } from "react-router-dom";
 import moment from "moment";
 import { updateEvent, getEvent } from "../api/eventApi";
 import { NotificationContext } from "../context/notification/NotificationContext";
@@ -54,7 +55,6 @@ const useStyles = makeStyles({
 
 const EditEvent = () => {
   const classes = useStyles();
-  const history = useHistory();
   const { id } = useParams();
   const { setNotificationMessage } = useContext(NotificationContext);
   const [spider, setSpider] = useState({});

@@ -1,10 +1,6 @@
 import React from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from "react-router-dom";
+import { Router, Switch, Route } from "react-router-dom";
+import { history } from "./utils/customHistory";
 import { ThemeProvider } from "@material-ui/styles";
 import { createMuiTheme } from "@material-ui/core/styles";
 import UserProvider from "./context/UserProvider";
@@ -62,7 +58,7 @@ const tagTheme = createMuiTheme({
 
 function App() {
   return (
-    <Router>
+    <Router history={history}>
       <ThemeProvider theme={mainTheme}>
         <UserProvider>
           <NotificationProvider>
