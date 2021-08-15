@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import { useState, useEffect, useContext, useCallback } from "react";
 import { NotificationContext } from "../context/notification/NotificationContext";
 import { pushToLogin } from "../utils/customHistory";
 
 const useCRUD = (getter, setter, destroyer) => {
   const [state, setState] = useState([]);
-  const { setNotificationMessage } = useContext(NotificationContext);
+  const { setNotificationMessage, clearNotificationMessage } =
+    useContext(NotificationContext);
 
   const isSessionExpired = (res) => {
     if (res.error) {
@@ -69,3 +70,5 @@ const useCRUD = (getter, setter, destroyer) => {
 
   return [state, setData, destroyData];
 };
+
+export default useCRUD;

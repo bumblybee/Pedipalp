@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { getSpiders } from "../api/spiderApi";
+import useCRUD from "../hooks/useCrud";
 import HomeCard from "../components/cards/HomeCard";
 import { makeStyles } from "@material-ui/core/styles";
 import Skeleton from "@material-ui/lab/Skeleton";
@@ -24,16 +25,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Home = () => {
   const classes = useStyles();
-  const [spiders, setSpiders] = useState([]);
-  const fetchSpiders = async () => {
-    const res = await getSpiders();
-    console.log(res);
-    setSpiders(res && res.data);
-  };
-
-  useEffect(() => {
-    fetchSpiders();
-  }, []);
+  const [spiders] = useCRUD(getSpiders);
 
   return spiders && spiders.length ? (
     <div className={classes.root}>
