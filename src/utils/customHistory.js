@@ -3,5 +3,5 @@ import { createBrowserHistory } from "history";
 export const history = createBrowserHistory();
 
 export const pushToLogin = () => {
-  history.push("/login");
+  history.push("/sign-in");
 };

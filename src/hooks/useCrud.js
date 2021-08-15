@@ -1,3 +1,4 @@
+import { CasinoSharp } from "@material-ui/icons";
 import { useState, useEffect, useContext, useCallback } from "react";
 import { NotificationContext } from "../context/notification/NotificationContext";
 import { pushToLogin } from "../utils/customHistory";
@@ -18,8 +19,9 @@ const useCRUD = (getter, setter, destroyer) => {
   };
 
   const getData = useCallback(async () => {
-    const res = await getter();
-
+    const { api, data } = getter;
+    const res = await api(data);
+    console.log(res);
     if (res && res.error) {
       setNotificationMessage(res.error, "error", true);
 
@@ -28,8 +30,12 @@ const useCRUD = (getter, setter, destroyer) => {
       }
     }
 
-    setState(res && res.data && res.data.length ? [...res.data] : []);
-  }, [getter, setNotificationMessage]);
+    setState(
+      res && res.data && res.data.length
+        ? [...res.data]
+        : res && res.data && res.data
+    );
+  }, [getter.api, setNotificationMessage]);
 
   const setData = async (data, id) => {
     if (data) {
@@ -66,7 +72,7 @@ const useCRUD = (getter, setter, destroyer) => {
 
   useEffect(() => {
     getData();
-  }, [getData]);
+  }, []);
 
   return [state, setData, destroyData];
 };

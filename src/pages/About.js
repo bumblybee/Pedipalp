@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import useCRUD from "../hooks/useCrud";
 import { useParams } from "react-router-dom";
 import S3 from "react-aws-s3";
 import { s3Config } from "../config/s3Config";
@@ -22,8 +23,8 @@ const useStyles = makeStyles((theme) => ({
 const About = () => {
   const classes = useStyles();
   const { id } = useParams();
-  const [spider, setSpider] = useState([]);
-
+  const [spider] = useCRUD({ api: getSpider, data: id });
+  console.log(spider);
   const handleDelete = async () => {
     if (window.confirm(`Are you sure you want to delete ${spider.name}?`)) {
       if (spider.image) await deletePrevImage();
@@ -46,16 +47,6 @@ const About = () => {
       })
       .catch((err) => console.error(err));
   };
-
-  const fetchSpider = async () => {
-    const res = await getSpider(id);
-    console.log(res);
-    setSpider(res.data);
-  };
-
-  useEffect(() => {
-    fetchSpider();
-  }, []);
 
   const headerButton = (
     <Chip

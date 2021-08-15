@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Home = () => {
   const classes = useStyles();
-  const [spiders] = useCRUD(getSpiders);
+  const [spiders] = useCRUD({ api: getSpiders });
 
   return spiders && spiders.length ? (
     <div className={classes.root}>

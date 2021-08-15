@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
+import useCRUD from "../hooks/useCrud";
 import { history } from "../utils/customHistory";
 import { Link, useParams } from "react-router-dom";
 import moment from "moment";
@@ -56,7 +57,7 @@ const CreateEvent = () => {
     molted: false,
     notes: "",
   });
-  console.log(id);
+
   const handleChecked = (e) => {
     setEventData({ ...eventData, [e.target.name]: e.target.checked });
   };
