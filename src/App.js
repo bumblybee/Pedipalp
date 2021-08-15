@@ -1,10 +1,16 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import { ThemeProvider } from "@material-ui/styles";
 import { createMuiTheme } from "@material-ui/core/styles";
 import UserProvider from "./context/UserProvider";
 import NotificationProvider from "./context/notification/NotificationProvider";
 import Notification from "./components/notification/Notification";
+import ProtectedRoute from "./components/protectedRoute/ProtectedRoute";
 import SignIn from "./pages/signIn/SignIn";
 import Nav from "./components/nav/Nav";
 import Home from "./pages/Home";
@@ -57,41 +63,41 @@ const tagTheme = createMuiTheme({
 function App() {
   return (
     <Router>
-      <Switch>
-        <ThemeProvider theme={mainTheme}>
-          <UserProvider>
-            <NotificationProvider>
-              <div className="App">
-                <Notification />
-                <Nav />
-                <Route path="/" exact>
+      <ThemeProvider theme={mainTheme}>
+        <UserProvider>
+          <NotificationProvider>
+            <div className="App">
+              <Notification />
+              <Nav />
+              <Switch>
+                <ProtectedRoute path="/" exact>
                   <ThemeProvider theme={tagTheme}>
                     <Home />
                   </ThemeProvider>
-                </Route>
-                <Route path="/create-spider" exact>
+                </ProtectedRoute>
+                <ProtectedRoute path="/create-spider" exact>
                   <CreateSpider />
-                </Route>
-                <Route path="/edit-spider/:id" exact>
+                </ProtectedRoute>
+                <ProtectedRoute path="/edit-spider/:id" exact>
                   <EditSpider />
-                </Route>
-                <Route path="/create-event/:id" exact>
+                </ProtectedRoute>
+                <ProtectedRoute path="/create-event/:id" exact>
                   <CreateEvent />
-                </Route>
-                <Route path="/edit-event/:id" exact>
+                </ProtectedRoute>
+                <ProtectedRoute path="/edit-event/:id" exact>
                   <EditEvent />
-                </Route>
-                <Route path="/about/:id" exact>
+                </ProtectedRoute>
+                <ProtectedRoute path="/about/:id" exact>
                   <About />
-                </Route>
+                </ProtectedRoute>
                 <Route path="/sign-in">
                   <SignIn />
                 </Route>
-              </div>
-            </NotificationProvider>
-          </UserProvider>
-        </ThemeProvider>
-      </Switch>
+              </Switch>
+            </div>
+          </NotificationProvider>
+        </UserProvider>
+      </ThemeProvider>
     </Router>
   );
 }

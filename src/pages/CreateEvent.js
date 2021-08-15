@@ -56,7 +56,7 @@ const CreateEvent = () => {
     molted: false,
     notes: "",
   });
-
+  console.log(id);
   const handleChecked = (e) => {
     setEventData({ ...eventData, [e.target.name]: e.target.checked });
   };
