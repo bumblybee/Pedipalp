@@ -44,7 +44,8 @@ const useStyles = makeStyles({
 
 const Signup = () => {
   const { signUserUp } = useContext(UserContext);
-  const { setNotificationMessage } = useContext(NotificationContext);
+  const { setNotificationMessage, clearNotificationMessage } =
+    useContext(NotificationContext);
   const classes = useStyles();
   const [loading, setLoading] = useState(false);
   const [userData, setUserData] = useState({ username: "", password: "" });
@@ -58,9 +59,11 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+
     if (userData.username && userData.password) {
+      clearNotificationMessage();
       const res = await signUserUp(userData);
-      console.log(res);
+
       setLoading(false);
       if (res && !res.error) history.push("/");
       if (res && res.error) setNotificationMessage(res.error, "error", true);
