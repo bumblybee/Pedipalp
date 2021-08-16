@@ -21,25 +21,33 @@ const useStyles = makeStyles((theme) => ({
       width: "100%",
     },
   },
+  message: {
+    marginTop: "8rem",
+  },
 }));
 
 const Home = () => {
   const classes = useStyles();
-  const [spiders] = useCRUD({ api: getSpiders });
+  const [loading, spiders] = useCRUD({ api: getSpiders });
 
-  return spiders && spiders.length ? (
+  if (loading)
+    return (
+      <div className={classes.root}>
+        <Skeleton variant="rect" width={310} height={240} />
+        <br />
+        <Skeleton variant="rect" width={310} height={240} />
+        <br />
+        <Skeleton variant="rect" width={310} height={240} />
+      </div>
+    );
+
+  return (
     <div className={classes.root}>
-      {spiders.map((spider) => (
-        <HomeCard spider={spider} />
-      ))}
-    </div>
-  ) : (
-    <div className={classes.root}>
-      <Skeleton variant="rect" width={310} height={240} />
-      <br />
-      <Skeleton variant="rect" width={310} height={240} />
-      <br />
-      <Skeleton variant="rect" width={310} height={240} />
+      {spiders && spiders.length ? (
+        spiders.map((spider) => <HomeCard key={spider.id} spider={spider} />)
+      ) : (
+        <h3 className={classes.message}>Go add some spiders!</h3>
+      )}
     </div>
   );
 };

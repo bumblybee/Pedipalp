@@ -1,14 +1,14 @@
-import { CasinoSharp } from "@material-ui/icons";
 import { useState, useEffect, useContext, useCallback } from "react";
 import { NotificationContext } from "../context/notification/NotificationContext";
 import { pushToLogin } from "../utils/customHistory";
 
 const useCRUD = (getter, setter, destroyer) => {
   const [state, setState] = useState([]);
+  const [loading, setLoading] = useState(false);
   const { setNotificationMessage, clearNotificationMessage } =
     useContext(NotificationContext);
 
-  const isSessionExpired = (res) => {
+  const handleErrors = (res) => {
     if (res.error) {
       setNotificationMessage(res.error, "error", true);
     }
@@ -19,27 +19,27 @@ const useCRUD = (getter, setter, destroyer) => {
   };
 
   const getData = useCallback(async () => {
+    setLoading(true);
+
     const { api, data } = getter;
     const res = await api(data);
-    console.log(res);
-    if (res && res.error) {
-      setNotificationMessage(res.error, "error", true);
 
-      if (res.error === "Your session has expired.") {
-        pushToLogin();
-      }
-    }
+    handleErrors(res);
 
     setState(
       res && res.data && res.data.length
         ? [...res.data]
         : res && res.data && res.data
     );
+
+    setLoading(false);
   }, [getter.api, setNotificationMessage]);
 
   const setData = async (data, id) => {
     if (data) {
       const res = await setter(data, id);
+
+      handleErrors(res);
 
       if (res && res.error) {
         setNotificationMessage(res.error, "error", true);
@@ -58,14 +58,7 @@ const useCRUD = (getter, setter, destroyer) => {
   const destroyData = async (id) => {
     const res = await destroyer(id);
 
-    if (res && res.error) {
-      setNotificationMessage(res.error, "error", true);
-
-      if (res.error === "Your session has expired.") {
-        pushToLogin();
-      }
-      return;
-    }
+    handleErrors(res);
 
     setState(res && res.data && res.data.length ? [...res.data] : []);
   };
@@ -74,7 +67,7 @@ const useCRUD = (getter, setter, destroyer) => {
     getData();
   }, []);
 
-  return [state, setData, destroyData];
+  return [loading, state, setData, destroyData];
 };
 
 export default useCRUD;

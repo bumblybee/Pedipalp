@@ -15,7 +15,6 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import FormControl from "@material-ui/core/FormControl";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import Typography from "@material-ui/core/Typography";
 import CheckboxComponent from "../components/checkbox/CheckboxComponent";
 
 const useStyles = makeStyles({

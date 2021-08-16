@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 const About = () => {
   const classes = useStyles();
   const { id } = useParams();
-  const [spider] = useCRUD({ api: getSpider, data: id });
+  const [loading, spider] = useCRUD({ api: getSpider, data: id });
 
   const handleDelete = async () => {
     if (window.confirm(`Are you sure you want to delete ${spider.name}?`)) {
