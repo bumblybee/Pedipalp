@@ -44,6 +44,11 @@ const useStyles = makeStyles({
   button: {
     marginLeft: "auto",
   },
+  imageIcon: {
+    marginTop: "0.25rem",
+    width: "44px",
+    height: "44px",
+  },
 });
 
 const CreateSpider = () => {
@@ -168,6 +173,7 @@ const CreateSpider = () => {
                 onChange={handleNewImage}
               />
               <Avatar
+                className={classes.imageIcon}
                 src={
                   newImage ? URL.createObjectURL(newImage) : spiderData.image
                 }
