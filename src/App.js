@@ -5,7 +5,6 @@ import { ThemeProvider } from "@material-ui/styles";
 import { createMuiTheme } from "@material-ui/core/styles";
 import UserProvider from "./context/UserProvider";
 import NotificationProvider from "./context/notification/NotificationProvider";
-import Notification from "./components/notification/Notification";
 import ProtectedRoute from "./components/protectedRoute/ProtectedRoute";
 import SignIn from "./pages/signIn/SignIn";
 import Nav from "./components/nav/Nav";
