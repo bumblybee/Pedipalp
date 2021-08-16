@@ -18,6 +18,7 @@ import FormControl from "@material-ui/core/FormControl";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
+import InsertPhotoIcon from "@material-ui/icons/InsertPhoto";
 
 const useStyles = makeStyles({
   root: {
@@ -74,7 +75,6 @@ const CreateSpider = () => {
       };
 
       const res = await createSpider(data);
-      console.log(res);
 
       if (res && !res.data) {
         setLoading(false);
@@ -148,7 +148,7 @@ const CreateSpider = () => {
               <InputLabel htmlFor="standard-adornment-amount">Age</InputLabel>
               <Input
                 type="number"
-                id="standard-adornment-amount"
+                id="mo"
                 endAdornment={
                   <InputAdornment position="end">mo</InputAdornment>
                 }
@@ -171,7 +171,9 @@ const CreateSpider = () => {
                 src={
                   newImage ? URL.createObjectURL(newImage) : spiderData.image
                 }
-              />
+              >
+                {!newImage && !spiderData.image && <InsertPhotoIcon />}
+              </Avatar>
             </FormControl>
             <FormControl className={classes.formItem}>
               <TextField
