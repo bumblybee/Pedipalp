@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import useCRUD from "../hooks/useCrud";
 import { useParams } from "react-router-dom";
 import S3 from "react-aws-s3";
@@ -24,7 +24,7 @@ const About = () => {
   const classes = useStyles();
   const { id } = useParams();
   const [spider] = useCRUD({ api: getSpider, data: id });
-  console.log(spider);
+
   const handleDelete = async () => {
     if (window.confirm(`Are you sure you want to delete ${spider.name}?`)) {
       if (spider.image) await deletePrevImage();

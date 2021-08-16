@@ -70,7 +70,7 @@ const CardComponent = ({ spider, headerButton, body, expandableContent }) => {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-  console.log(spider);
+
   return (
     <Card className={classes.root} raised>
       <CardHeader

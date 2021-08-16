@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { history } from "../utils/customHistory";
 import { Link, useParams } from "react-router-dom";
 import moment from "moment";
-import { updateEvent, getEvent } from "../api/eventApi";
+import { updateEvent, getEvent, deleteEvent } from "../api/eventApi";
 import { NotificationContext } from "../context/notification/NotificationContext";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
@@ -13,8 +13,10 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import FormControl from "@material-ui/core/FormControl";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import Typography from "@material-ui/core/Typography";
 import CheckboxComponent from "../components/checkbox/CheckboxComponent";
+import { red } from "@material-ui/core/colors";
+import DeleteIcon from "@material-ui/icons/Delete";
+import Chip from "@material-ui/core/Chip";
 
 const useStyles = makeStyles({
   root: {
@@ -39,6 +41,16 @@ const useStyles = makeStyles({
   },
   button: {
     marginLeft: "auto",
+  },
+  deleteButtonWrapper: {
+    width: "100%",
+    display: "flex",
+    justifyContent: "flex-end",
+  },
+  deleteButton: {
+    color: "#fff",
+    background: red["A400"],
+    "&:not(svg)": { boxShadow: "0 0 1px rgba(0,0,0,0.1)" },
   },
   date: {
     content: "",
@@ -105,6 +117,16 @@ const EditEvent = () => {
     }
   };
 
+  const handleDelete = async () => {
+    if (
+      window.confirm(`Are you sure you want to delete ${spider.name}'s event?`)
+    ) {
+      const deleted = await deleteEvent(id);
+      console.log(deleted);
+      deleted && history.push("/");
+    }
+  };
+
   useEffect(() => {
     fetchEvent();
   }, []);
@@ -120,6 +142,15 @@ const EditEvent = () => {
       }}
     >
       <Card className={classes.root} raised>
+        <div className={classes.deleteButtonWrapper}>
+          <Chip
+            className={classes.deleteButton}
+            icon={<DeleteIcon className={classes.deleteButton} />}
+            label="Delete"
+            size="small"
+            onClick={handleDelete}
+          />
+        </div>
         <CardHeader
           className={classes.header}
           titleTypographyProps={{ variant: "h6" }}
