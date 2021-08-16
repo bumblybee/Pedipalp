@@ -63,7 +63,6 @@ function App() {
         <UserProvider>
           <NotificationProvider>
             <div className="App">
-              <Notification />
               <Nav />
               <Switch>
                 <ProtectedRoute path="/" exact>

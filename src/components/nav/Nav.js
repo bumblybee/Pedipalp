@@ -1,6 +1,7 @@
 import React, { useEffect, useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
+import Notification from "../notification/Notification";
 import { makeStyles } from "@material-ui/core/styles";
 import { lime, purple } from "@material-ui/core/colors";
 import AppBar from "@material-ui/core/AppBar";
@@ -69,6 +70,7 @@ const Nav = () => {
   return (
     <div className={classes.root}>
       <AppBar position="fixed" color="primary">
+        <Notification />
         <Toolbar className={classes.toolbar}>
           <Link to="/" style={{ textDecoration: "none" }}>
             <Avatar alt="spider" src="/spidercartoon.png" />
