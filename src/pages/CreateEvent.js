@@ -77,6 +77,8 @@ const CreateEvent = () => {
       }
     } else {
       setNotificationMessage("Please enter a date", "error", true);
+      setLoading(false);
+      return;
     }
   };
 
