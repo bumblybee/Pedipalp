@@ -1,73 +1,73 @@
-import { useState, useEffect, useContext, useCallback } from "react";
-import { NotificationContext } from "../context/notification/NotificationContext";
-import { pushToLogin } from "../utils/customHistory";
+import { useState, useEffect, useContext, useCallback } from "react"
+import { NotificationContext } from "../context/notification/NotificationContext"
+import { pushToLogin } from "../utils/customHistory"
 
 const useCRUD = (getter, setter, destroyer) => {
-  const [state, setState] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [state, setState] = useState([])
+  const [loading, setLoading] = useState(false)
   const { setNotificationMessage, clearNotificationMessage } =
-    useContext(NotificationContext);
+    useContext(NotificationContext)
 
   const handleErrors = (res) => {
     if (res.error) {
-      setNotificationMessage(res.error, "error", true);
+      setNotificationMessage(res.error, "error", true)
     }
 
     if (res.error === "Your session has expired.") {
-      pushToLogin();
+      pushToLogin()
     }
-  };
+  }
 
   const getData = useCallback(async () => {
-    setLoading(true);
+    setLoading(true)
 
-    const { api, data } = getter;
-    const res = await api(data);
+    const { api, data } = getter
+    const res = await api(data)
 
-    handleErrors(res);
+    handleErrors(res)
 
     setState(
       res && res.data && res.data.length
         ? [...res.data]
         : res && res.data && res.data
-    );
+    )
 
-    setLoading(false);
-  }, [getter.api, setNotificationMessage]);
+    setLoading(false)
+  }, [getter.api])
 
   const setData = async (data, id) => {
     if (data) {
-      const res = await setter(data, id);
+      const res = await setter(data, id)
 
-      handleErrors(res);
+      handleErrors(res)
 
       if (res && res.error) {
-        setNotificationMessage(res.error, "error", true);
+        setNotificationMessage(res.error, "error", true)
 
         if (res.error === "Your session has expired.") {
-          pushToLogin();
+          pushToLogin()
         }
-        return;
+        return
       }
 
-      clearNotificationMessage();
-      setState(res && res.data && res.data.length ? [...res.data] : []);
+      clearNotificationMessage()
+      setState(res && res.data && res.data.length ? [...res.data] : [])
     }
-  };
+  }
 
   const destroyData = async (id) => {
-    const res = await destroyer(id);
+    const res = await destroyer(id)
 
-    handleErrors(res);
+    handleErrors(res)
 
-    setState(res && res.data && res.data.length ? [...res.data] : []);
-  };
+    setState(res && res.data && res.data.length ? [...res.data] : [])
+  }
 
   useEffect(() => {
-    getData();
-  }, []);
+    getData()
+  }, [])
 
-  return [loading, state, setData, destroyData];
-};
+  return [loading, state, setData, destroyData]
+}
 
-export default useCRUD;
+export default useCRUD

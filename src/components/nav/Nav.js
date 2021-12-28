@@ -1,13 +1,14 @@
-import React, { useEffect, useContext } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { UserContext } from "../../context/UserContext";
-import Notification from "../notification/Notification";
-import { makeStyles } from "@material-ui/core/styles";
-import { lime, purple } from "@material-ui/core/colors";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Button from "@material-ui/core/Button";
-import Avatar from "@material-ui/core/Avatar";
+import React, { useEffect, useContext } from "react"
+import { Link, useLocation } from "react-router-dom"
+import { UserContext } from "../../context/UserContext"
+import Notification from "../notification/Notification"
+import { makeStyles } from "@material-ui/core/styles"
+import { lime, purple } from "@material-ui/core/colors"
+import AppBar from "@material-ui/core/AppBar"
+import Toolbar from "@material-ui/core/Toolbar"
+import Button from "@material-ui/core/Button"
+import Avatar from "@material-ui/core/Avatar"
+import Typography from "@material-ui/core/Typography"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,21 +24,22 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
+    color: "white",
   },
   button: {
     color: purple[500],
     background: lime["A400"],
   },
-}));
+}))
 
 const Nav = () => {
-  const { pathname } = useLocation();
-  const { user, getCurrentUser } = useContext(UserContext);
-  const classes = useStyles();
+  const { pathname } = useLocation()
+  const { user, getCurrentUser } = useContext(UserContext)
+  const classes = useStyles()
 
   useEffect(() => {
-    getCurrentUser();
-  }, [pathname]);
+    getCurrentUser()
+  }, [pathname])
 
   const renderButton = () => {
     if (user) {
@@ -53,7 +55,7 @@ const Nav = () => {
             Back
           </Button>
         </Link>
-      );
+      )
     } else if (!user && pathname !== "/sign-in") {
       return (
         <Link to="/sign-in" style={{ textDecoration: "none" }}>
@@ -61,11 +63,11 @@ const Nav = () => {
             Sign in
           </Button>
         </Link>
-      );
+      )
     } else {
-      return "";
+      return ""
     }
-  };
+  }
 
   return (
     <div className={classes.root}>
@@ -75,11 +77,14 @@ const Nav = () => {
           <Link to="/" style={{ textDecoration: "none" }}>
             <Avatar alt="spider" src="/spidercartoon.png" />
           </Link>
+          <Typography className={classes.title} variant="h6">
+            Pedipalps
+          </Typography>
           <div>{renderButton()}</div>
         </Toolbar>
       </AppBar>
     </div>
-  );
-};
+  )
+}
 
-export default Nav;
+export default Nav
